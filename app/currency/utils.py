@@ -19,4 +19,3 @@ def generate_password(length: int = 10) -> str:
 def read_txt(name: str = 'requirements.txt') -> str:
     with open(name, "r") as txt_file:
         return txt_file.read()
-

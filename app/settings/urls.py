@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from\
-    currency.views import generate_pass, requirements
+from currency.views import generate_pass, requirements
 
 
 urlpatterns = [

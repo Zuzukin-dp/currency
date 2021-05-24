@@ -1,4 +1,5 @@
 from currency.views import generate_pass, requirements
+
 from django.contrib import admin
 from django.urls import path
 

@@ -1,7 +1,7 @@
+from currency.utils import generate_password as gp, read_txt
 from django.http import HttpResponse
 # from django.shortcuts import render
 
-from currency.utils import generate_password as gp, read_txt
 
 
 def generate_pass(request):

@@ -1,5 +1,6 @@
-import string
 import random
+import string
+
 # import requests
 # import csv
 # from faker import Faker

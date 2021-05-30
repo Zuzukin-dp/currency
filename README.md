@@ -11,3 +11,5 @@
 
 '$ python ./add/manage.py runserver'
 
+# for ipython, run console + import django packages 
+'$ python ./add/manage.py shell_plus --print-sql'

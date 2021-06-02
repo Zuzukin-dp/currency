@@ -13,3 +13,5 @@
 
 # for ipython, run console + import django packages 
 '$ python ./add/manage.py shell_plus --print-sql'
+
+'$ python manage.py shell_plus --print-sql'

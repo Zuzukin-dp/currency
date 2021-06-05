@@ -1,12 +1,13 @@
-from django.core.management.base import BaseCommand, CommandError
 from currency.models import ContactUs
+
+from django.core.management.base import BaseCommand
 
 from faker import Faker
 fake = Faker()
 
 
 class Command(BaseCommand):
-    help = 'Generate Random records'
+    help_ = 'Generate Random records'
 
     def handle(self, *args, **options):
         for i in range(300):

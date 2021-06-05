@@ -1,8 +1,9 @@
-from django.core.management.base import BaseCommand, CommandError
+import random
+from decimal import Decimal
+
 from currency.models import Rate
 
-from decimal import Decimal
-import random
+from django.core.management.base import BaseCommand
 
 
 def round_to_two(num):
@@ -13,7 +14,7 @@ def round_to_two(num):
 
 
 class Command(BaseCommand):
-    help = 'Generate Random records'
+    help_ = 'Generate Random records'
 
     def handle(self, *args, **options):
         for i in range(300):

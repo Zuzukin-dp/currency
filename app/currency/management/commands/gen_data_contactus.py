@@ -7,7 +7,7 @@ fake = Faker()
 
 
 class Command(BaseCommand):
-    help_ = 'Generate Random records'
+    help = 'Generate Random records' # noqa
 
     def handle(self, *args, **options):
         for i in range(300):

@@ -1,4 +1,4 @@
-from currency.views import generate_pass, rate_list, requirements
+from currency.views import generate_pass, rate_list, requirements, rate_details
 
 from django.contrib import admin
 from django.urls import path
@@ -7,8 +7,8 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('gen_pass/', generate_pass),
-    path('requirements/', requirements),
+    # path('gen_pass/', generate_pass),
+    # path('requirements/', requirements),
     path('rate/list/', rate_list),
-
+    path('rate/details/<int:pk>/', rate_details),
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from currency.models import Rate
+from currency.models import Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
 from django.http import HttpResponse
@@ -32,3 +32,22 @@ def rate_details(request, pk):
         'object': rate,
     }
     return render(request, 'rate_details.html', context=context)
+
+
+def source_list(request):
+    queryset = Source.objects.all()
+    # print(queryset.query)
+
+    context = {
+        'object': queryset,
+    }
+    return render(request, 'source_list.html', context=context)
+
+
+def source_details(request, pk):
+    source = get_object_or_404(Source, id=pk)
+
+    context = {
+        'object': source,
+    }
+    return render(request, 'source_details.html', context=context)

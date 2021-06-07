@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
 from currency.models import Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
 
 
 def generate_pass(request):

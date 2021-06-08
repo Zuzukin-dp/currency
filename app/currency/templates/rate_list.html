@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="3">
+  <thead>
+    <tr align="center">
+      <th>ID</th>
+      <th>Type</th>
+      <th>Sale</th>
+      <th>Buy</th>
+      <th>Created</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for rate in object%}
+    <tr>
+      <td>{{ rate.id }}</td>
+      <td>{{ rate.cur_type }}</td>
+      <td>{{ rate.sale }}</td>
+      <td>{{ rate.buy }}</td>
+      <td>{{ rate.created }}</td>
+      <td>{{ rate.source }}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+</body>
+</html>

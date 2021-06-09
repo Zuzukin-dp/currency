@@ -112,3 +112,21 @@ def source_create(request):
         'count': Source.objects.count()
     }
     return render(request, 'source_create.html', context=context)
+
+
+def source_update(request, pk):
+    instance = get_object_or_404(Source, id=pk)
+
+    if request.method == 'POST':
+        form_data = request.POST
+        form = SourceForm(form_data, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/currency/source/list/')
+    elif request.method == 'GET':
+        form = SourceForm(instance=instance)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'source_update.html', context=context)

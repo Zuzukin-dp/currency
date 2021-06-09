@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body>
+<!--
+<a href="/currency/rate/create/">Create Rate</a>
+-->
+<button onclick="location.href='/currency/rate/create/';">Create Rate</button>
+
 
 <table border="3">
   <thead>
@@ -15,6 +20,8 @@
       <th>Buy</th>
       <th>Created</th>
       <th>Source</th>
+      <th>Details</th>
+      <th>Edit</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +33,8 @@
       <td>{{ rate.buy }}</td>
       <td>{{ rate.created }}</td>
       <td>{{ rate.source }}</td>
+      <td><a href="/currency/rate/details/{{ rate.id }}/">Details</a></td>
+      <td><a href="/currency/rate/update/{{ rate.id }}/">Edit</a></td>
     </tr>
     {% endfor %}
 

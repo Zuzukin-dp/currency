@@ -130,3 +130,10 @@ def source_update(request, pk):
         'form': form,
     }
     return render(request, 'source_update.html', context=context)
+
+
+def source_delete(request, pk):
+    instance = get_object_or_None(Source, id=pk)
+    if instance is not None:
+        instance.delete()
+    return HttpResponseRedirect('/currency/source/list/')

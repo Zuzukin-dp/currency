@@ -2,7 +2,7 @@ from currency.views import (
     generate_pass,
     rate_create, rate_details, rate_delete, rate_update, rate_list,
     requirements,
-    source_details, source_list,
+    source_create, source_details, source_list,
 )
 
 from django.contrib import admin
@@ -21,5 +21,6 @@ urlpatterns = [
     path('currency/rate/delete/<int:pk>/', rate_delete),
     path('currency/source/list/', source_list),
     path('currency/source/details/<int:pk>/', source_details),
+    path('currency/source/create/', source_create),
 
 ]

@@ -1,4 +1,4 @@
-from currency.forms import RateForm
+from currency.forms import RateForm, SourceForm
 from currency.models import Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
@@ -95,3 +95,20 @@ def source_details(request, pk):
         'object': source,
     }
     return render(request, 'source_details.html', context=context)
+
+
+def source_create(request):
+    if request.method == 'POST':
+        form_data = request.POST
+        form = SourceForm(form_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/currency/source/list/')
+    elif request.method == 'GET':
+        form = SourceForm()
+
+    context = {
+        'form': form,
+        'count': Source.objects.count()
+    }
+    return render(request, 'source_create.html', context=context)

@@ -1,8 +1,9 @@
-from currency.forms import RateForm, SourceForm, ContactUsForm
-from currency.models import Rate, Source, ContactUs
+from annoying.functions import get_object_or_None
+
+from currency.forms import ContactUsForm, RateForm, SourceForm
+from currency.models import ContactUs, Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
-from annoying.functions import get_object_or_None
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 

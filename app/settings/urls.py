@@ -1,9 +1,9 @@
 from currency.views import (
-    contactus_create, contactus_details, contactus_delete, contactus_list, contactus_update,
+    contactus_create, contactus_delete, contactus_details, contactus_list, contactus_update,
     generate_pass,
-    rate_create, rate_details, rate_delete, rate_update, rate_list,
+    rate_create, rate_delete, rate_details, rate_list, rate_update,
     requirements,
-    source_create, source_details, source_delete, source_list, source_update,
+    source_create, source_delete, source_details, source_list, source_update,
 )
 
 from django.contrib import admin

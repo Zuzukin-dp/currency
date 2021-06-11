@@ -1,4 +1,5 @@
 from currency.views import (
+    contactus_create, contactus_details, contactus_delete, contactus_list, contactus_update,
     generate_pass,
     rate_create, rate_details, rate_delete, rate_update, rate_list,
     requirements,
@@ -24,5 +25,10 @@ urlpatterns = [
     path('currency/source/create/', source_create),
     path('currency/source/update/<int:pk>/', source_update),
     path('currency/source/delete/<int:pk>/', source_delete),
+    path('currency/contactus/list/', contactus_list),
+    path('currency/contactus/details/<int:pk>/', contactus_details),
+    path('currency/contactus/create/', contactus_create),
+    path('currency/contactus/update/<int:pk>/', contactus_update),
+    path('currency/contactus/delete/<int:pk>/', contactus_delete),
 
 ]

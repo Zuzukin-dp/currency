@@ -1,5 +1,5 @@
-from currency.forms import RateForm, SourceForm
-from currency.models import Rate, Source
+from currency.forms import RateForm, SourceForm, ContactUsForm
+from currency.models import Rate, Source, ContactUs
 from currency.utils import generate_password as gp, read_txt
 
 from annoying.functions import get_object_or_None
@@ -137,3 +137,64 @@ def source_delete(request, pk):
     if instance is not None:
         instance.delete()
     return HttpResponseRedirect('/currency/source/list/')
+
+
+def contactus_list(request):
+    queryset = ContactUs.objects.all()
+    # print(queryset.query)
+
+    context = {
+        'object': queryset,
+    }
+    return render(request, 'contactus_list.html', context=context)
+
+
+def contactus_details(request, pk):
+    source = get_object_or_404(ContactUs, id=pk)
+
+    context = {
+        'object': source,
+    }
+    return render(request, 'contactus_details.html', context=context)
+
+
+def contactus_create(request):
+    if request.method == 'POST':
+        form_data = request.POST
+        form = ContactUsForm(form_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/currency/contactus/list/')
+    elif request.method == 'GET':
+        form = ContactUsForm()
+
+    context = {
+        'form': form,
+        'count': ContactUs.objects.count()
+    }
+    return render(request, 'contactus_create.html', context=context)
+
+
+def contactus_update(request, pk):
+    instance = get_object_or_404(ContactUs, id=pk)
+
+    if request.method == 'POST':
+        form_data = request.POST
+        form = ContactUsForm(form_data, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/currency/contactus/list/')
+    elif request.method == 'GET':
+        form = ContactUsForm(instance=instance)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'contactus_update.html', context=context)
+
+
+def contactus_delete(request, pk):
+    instance = get_object_or_None(ContactUs, id=pk)
+    if instance is not None:
+        instance.delete()
+    return HttpResponseRedirect('/currency/contactus/list/')

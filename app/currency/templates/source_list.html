@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<button onclick="location.href='/currency/source/create/';">Create Rate</button>
+
 <table border="3">
   <thead>
     <tr align="center">
@@ -15,6 +17,8 @@
       <th>Phone number</th>
       <th>Created</th>
       <th>Updated</th>
+      <th>Details</th>
+      <th>Edit</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +30,8 @@
       <td>{{ source.phone }}</td>
       <td>{{ source.created }}</td>
       <td>{{ source.updated }}</td>
+      <td><a href="/currency/source/details/{{ source.id }}/">Details</a></td>
+      <td><a href="/currency/source/update/{{ source.id }}/">Edit</a></td>
     </tr>
     {% endfor %}
 

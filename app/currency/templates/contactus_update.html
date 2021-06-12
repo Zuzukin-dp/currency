@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+ID: {{ form.instance.id}}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+
+<button onclick="location.href='/currency/contactus/delete/{{form.instance.id}}/';">Delete</button>
+<!--
+<a href="/currency/source/delete/{{form.instance.id}}/">Delete</a>
+-->
+
+</body>
+</html>

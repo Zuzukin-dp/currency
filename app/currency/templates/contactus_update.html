@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block main_content %}
 
 ID: {{ form.instance.id}}
 
@@ -19,5 +15,4 @@ ID: {{ form.instance.id}}
 <a href="/currency/source/delete/{{form.instance.id}}/">Delete</a>
 -->
 
-</body>
-</html>
+{% endblock main_content %}

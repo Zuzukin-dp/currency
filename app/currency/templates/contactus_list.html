@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block main_content %}
 
 <button onclick="location.href='/currency/contactus/create/';">Create Contact</button>
 
@@ -34,5 +30,4 @@
   </tbody>
 </table>
 
-</body>
-</html>
+{% endblock main_content %}

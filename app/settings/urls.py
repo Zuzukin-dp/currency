@@ -1,6 +1,7 @@
 from currency.views import (
     contactus_create, contactus_delete, contactus_details, contactus_list, contactus_update,
     generate_pass,
+    index,
     rate_create, rate_delete, rate_details, rate_list, rate_update,
     requirements,
     source_create, source_delete, source_details, source_list, source_update,
@@ -12,6 +13,7 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index),
 
     path('gen_pass/', generate_pass),
     path('requirements/', requirements),

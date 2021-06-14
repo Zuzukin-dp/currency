@@ -13,6 +13,10 @@ def generate_pass(request):
     return HttpResponse(password)
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 def requirements(request):
     reader = read_txt('/home/bav/python/currency/requirements.txt')
     return HttpResponse(reader)

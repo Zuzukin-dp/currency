@@ -2,7 +2,7 @@
 
 {% block main_content %}
 
-<button onclick="location.href='/currency/contactus/create/';">Create Contact</button>
+<button onclick="location.href='{% url 'contactus-create' %}';">Create Contact</button>
 
 <table border="3">
   <thead>
@@ -22,8 +22,8 @@
       <td>{{ contactus.email_from }}</td>
       <td>{{ contactus.subject }}</td>
       <td>{{ contactus.message }}</td>
-      <td><a href="/currency/contactus/details/{{ contactus.id }}/">Details</a></td>
-      <td><a href="/currency/contactus/update/{{ contactus.id }}/">Edit</a></td>
+      <td><a href="{% url 'contactus-details' contactus.id %}">Details</a></td>
+      <td><a href="{% url 'contactus-update' contactus.id %}">Edit</a></td>
     </tr>
     {% endfor %}
 

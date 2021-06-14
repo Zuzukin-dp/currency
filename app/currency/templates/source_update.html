@@ -10,7 +10,7 @@ ID: {{ form.instance.id}}
   <button type="submit">Save</button>
 </form>
 
-<button onclick="location.href='/currency/source/delete/{{form.instance.id}}/';">Delete</button>
+<button onclick="location.href='{% url 'source-delete' form.instance.id %}';">Delete</button>
 <!--
 <a href="/currency/source/delete/{{form.instance.id}}/">Delete</a>
 -->

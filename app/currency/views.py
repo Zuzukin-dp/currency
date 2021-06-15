@@ -5,7 +5,7 @@ from currency.models import ContactUs, Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, reverse, redirect
 
 
 def generate_pass(request):
@@ -47,7 +47,8 @@ def rate_create(request):
         form = RateForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/rate/list/')
+            # return HttpResponseRedirect(reverse('currency:rate-list'))
+            return redirect('currency:rate-list')
     elif request.method == 'GET':
         form = RateForm()
 
@@ -66,7 +67,7 @@ def rate_update(request, pk):
         form = RateForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/rate/list/')
+            return redirect('currency:rate-list')
     elif request.method == 'GET':
         form = RateForm(instance=instance)
 
@@ -80,7 +81,7 @@ def rate_delete(request, pk):
     instance = get_object_or_None(Rate, id=pk)
     if instance is not None:
         instance.delete()
-    return HttpResponseRedirect('/currency/rate/list/')
+    return redirect('currency:rate-list')
 
 
 def source_list(request):
@@ -108,7 +109,7 @@ def source_create(request):
         form = SourceForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/source/list/')
+            return redirect('currency:source-list')
     elif request.method == 'GET':
         form = SourceForm()
 
@@ -127,7 +128,7 @@ def source_update(request, pk):
         form = SourceForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/source/list/')
+            return redirect('currency:source-list')
     elif request.method == 'GET':
         form = SourceForm(instance=instance)
 
@@ -141,7 +142,7 @@ def source_delete(request, pk):
     instance = get_object_or_None(Source, id=pk)
     if instance is not None:
         instance.delete()
-    return HttpResponseRedirect('/currency/source/list/')
+    return redirect('currency:source-list')
 
 
 def contactus_list(request):
@@ -169,7 +170,7 @@ def contactus_create(request):
         form = ContactUsForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/contactus/list/')
+            return redirect('currency:contactus-list')
     elif request.method == 'GET':
         form = ContactUsForm()
 
@@ -188,7 +189,7 @@ def contactus_update(request, pk):
         form = ContactUsForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/contactus/list/')
+            return redirect('currency:contactus-list')
     elif request.method == 'GET':
         form = ContactUsForm(instance=instance)
 
@@ -202,4 +203,4 @@ def contactus_delete(request, pk):
     instance = get_object_or_None(ContactUs, id=pk)
     if instance is not None:
         instance.delete()
-    return HttpResponseRedirect('/currency/contactus/list/')
+    return redirect('currency:contactus-list')

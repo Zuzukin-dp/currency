@@ -11,6 +11,7 @@
       <th>EmailFrom</th>
       <th>Subject</th>
       <th>Message</th>
+      <th>Created</th>
       <th>Details</th>
       <th>Edit</th>
     </tr>
@@ -22,6 +23,7 @@
       <td>{{ contactus.email_from }}</td>
       <td>{{ contactus.subject }}</td>
       <td>{{ contactus.message }}</td>
+      <td>{{ contactus.created }}</td>
       <td><a href="{% url 'currency:contactus-details' contactus.id %}">Details</a></td>
       <td><a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a></td>
     </tr>

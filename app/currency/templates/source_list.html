@@ -2,7 +2,7 @@
 
 {% block main_content %}
 
-<button onclick="location.href='{% url 'source-create' %}';">Create Source</button>
+<button onclick="location.href='{% url 'currency:source-create' %}';">Create Source</button>
 
 <table border="3">
   <thead>
@@ -26,8 +26,8 @@
       <td>{{ source.phone }}</td>
       <td>{{ source.created }}</td>
       <td>{{ source.updated }}</td>
-      <td><a href="{% url 'source-details' source.id %}">Details</a></td>
-      <td><a href="{% url 'source-update' source.id %}">Edit</a></td>
+      <td><a href="{% url 'currency:source-details' source.id %}">Details</a></td>
+      <td><a href="{% url 'currency:source-update' source.id %}">Edit</a></td>
     </tr>
     {% endfor %}
 

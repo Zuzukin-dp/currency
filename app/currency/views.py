@@ -1,13 +1,13 @@
-from annoying.functions import get_object_or_None
+# from annoying.functions import get_object_or_None
 
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, reverse, redirect
-from django.views.generic import CreateView, ListView, DetailView, UpdateView,DeleteView
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 
 def generate_pass(request):

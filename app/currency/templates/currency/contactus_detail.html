@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+<table border="3">
+  <thead>
+    <tr align="center">
+      <th>ID</th>
+      <th>EmailFrom</th>
+      <th>Subject</th>
+      <th>Message</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr>
+      <td>{{ object.id }}</td>
+      <td>{{ object.email_from }}</td>
+      <td>{{ object.subject }}</td>
+      <td>{{ object.message }}</td>
+      <td>{{ object.created }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock main_content %}

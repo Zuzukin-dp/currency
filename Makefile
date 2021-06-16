@@ -16,3 +16,6 @@ show_urls:
 
 shell:
 	$(manage_py) shell_plus --print-sql
+
+freeze:
+	pip freeze > requirements.txt

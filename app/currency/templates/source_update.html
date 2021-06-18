@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block main_content %}
 
 ID: {{ form.instance.id}}
 
@@ -14,10 +10,9 @@ ID: {{ form.instance.id}}
   <button type="submit">Save</button>
 </form>
 
-<button onclick="location.href='/currency/source/delete/{{form.instance.id}}/';">Delete</button>
+<button onclick="location.href='{% url 'currency:source-delete' form.instance.id %}';">Delete</button>
 <!--
 <a href="/currency/source/delete/{{form.instance.id}}/">Delete</a>
 -->
 
-</body>
-</html>
+{% endblock main_content %}

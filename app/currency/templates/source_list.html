@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<button onclick="location.href='/currency/source/create/';">Create Rate</button>
+{% block main_content %}
+
+<button onclick="location.href='{% url 'currency:source-create' %}';">Create Source</button>
 
 <table border="3">
   <thead>
@@ -22,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    {%for source in object%}
+    {%for source in object_list%}
     <tr>
       <td>{{ source.id }}</td>
       <td>{{ source.name }}</td>
@@ -30,13 +26,12 @@
       <td>{{ source.phone }}</td>
       <td>{{ source.created }}</td>
       <td>{{ source.updated }}</td>
-      <td><a href="/currency/source/details/{{ source.id }}/">Details</a></td>
-      <td><a href="/currency/source/update/{{ source.id }}/">Edit</a></td>
+      <td><a href="{% url 'currency:source-details' source.id %}">Details</a></td>
+      <td><a href="{% url 'currency:source-update' source.id %}">Edit</a></td>
     </tr>
     {% endfor %}
 
   </tbody>
 </table>
 
-</body>
-</html>
+{% endblock main_content %}

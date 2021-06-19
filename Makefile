@@ -19,3 +19,6 @@ shell:
 
 freeze:
 	pip freeze > requirements.txt
+
+createsuperuser:
+	$(manage_py) createsuperuser

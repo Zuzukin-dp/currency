@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.core.mail import send_mail
 
 
 def generate_pass(request):
@@ -98,6 +99,25 @@ class CreateContactUs(CreateView):
     form_class = ContactUsForm
     template_name = 'contactus_create.html'
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        body = f'''
+        From: {data['email_from']}
+        Topic: {data['subject']}
+        
+        Message
+        {data['message']}
+        '''
+
+        send_mail(
+            'Contact Us from Client',
+            body,
+            'pydjantest@gmail.com',
+            ['pydjantest@gmail.com'],
+            fail_silently=False,
+        )
+        return super().form_valid(form)
 
 
 class ContactUsUpdateView(UpdateView):

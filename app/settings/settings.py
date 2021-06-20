@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'annoying',
     'debug_toolbar',
+    'rangefilter',
+    'import_export',
 
     'currency',
 ]
@@ -135,3 +137,12 @@ INTERNAL_IPS = [
     '127.0.0.1',
     '0.0.0.0',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+try:
+    from settings.settings_local import *  # noqa
+except ImportError:
+    print('No local settings were found!!!\n' * 5)  # noqa

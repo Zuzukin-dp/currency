@@ -2,8 +2,10 @@
 
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
+from currency.tasks import task_send_email
 from currency.utils import generate_password as gp, read_txt
 
+# from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -98,6 +100,22 @@ class CreateContactUs(CreateView):
     form_class = ContactUsForm
     template_name = 'contactus_create.html'
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        body = f'''
+        From: {data['email_from']}
+        Topic: {data['subject']}
+        Message
+        {data['message']}
+        '''
+
+        task_send_email.delay(body)
+
+        # from .tasks import print_hallo
+        # print_hallo.delay()
+
+        return super().form_valid(form)
 
 
 class ContactUsUpdateView(UpdateView):

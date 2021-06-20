@@ -134,3 +134,4 @@ app/db.sqlite3
 /tmp.py
 /work_commads.txt
 /app/currency/views_old.py
+/app/settings/settings_local.py

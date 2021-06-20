@@ -15,3 +15,11 @@
 '$ python ./add/manage.py shell_plus --print-sql'
 
 '$ python manage.py shell_plus --print-sql'
+
+# For Celery
+
+'$ sudo service rabbitmq-server start'
+
+'$ sudo service rabbitmq-server status'
+
+'$ celery -A settings worker -l info'

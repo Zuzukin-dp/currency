@@ -2,6 +2,7 @@
 
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
+from currency.tasks import task_send_email
 from currency.utils import generate_password as gp, read_txt
 
 from django.core.mail import send_mail
@@ -109,13 +110,11 @@ class CreateContactUs(CreateView):
         {data['message']}
         '''
 
-        send_mail(
-            'Contact Us from Client',
-            body,
-            'pydjantest@gmail.com',
-            ['pydjantest@gmail.com'],
-            fail_silently=False,
-        )
+        task_send_email.delay(body)
+
+        # from .tasks import print_hallo
+        # print_hallo.delay()
+
         return super().form_valid(form)
 
 

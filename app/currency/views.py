@@ -4,11 +4,11 @@ from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
 from currency.utils import generate_password as gp, read_txt
 
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from django.core.mail import send_mail
 
 
 def generate_pass(request):
@@ -105,7 +105,6 @@ class CreateContactUs(CreateView):
         body = f'''
         From: {data['email_from']}
         Topic: {data['subject']}
-        
         Message
         {data['message']}
         '''

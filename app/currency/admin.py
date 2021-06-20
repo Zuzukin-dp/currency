@@ -1,10 +1,11 @@
-from django.contrib import admin
 from currency.models import ContactUs, Rate, Source
 
-from rangefilter.filters import DateTimeRangeFilter
+from django.contrib import admin
 
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+
+from rangefilter.filters import DateTimeRangeFilter
 
 
 class RateResource(resources.ModelResource):

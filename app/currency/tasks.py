@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 def print_hallo(object_id):
     from currency.models import ContactUs
     ContactUs.objects.get(id=object_id)
-    print(f'ContactUs id: {object_id}')
+    return f'ContactUs id: {object_id}'
 
 
 @shared_task(

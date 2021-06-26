@@ -23,8 +23,11 @@ freeze:
 createsuperuser:
 	$(manage_py) createsuperuser
 
-worker10:
-	cd app && celery -A settings worker -l info -c 10
-
 worker:
+	cd app && celery -A settings worker -l info
+
+worker20:
 	cd app && celery -A settings worker -l info --autoscale=0,20
+
+beat:
+	cd app && celery -A settings beat -l info

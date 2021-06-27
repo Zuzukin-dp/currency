@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import random
 import string
 
@@ -20,3 +22,11 @@ def generate_password(length: int = 10) -> str:
 def read_txt(name: str = 'requirements.txt') -> str:
     with open(name, "r") as txt_file:
         return txt_file.read()
+
+
+def to_decimal(number: str) -> Decimal:
+    """
+    :inputs number as string:
+    :returns a number as a string, rounded to two decimal places:
+    """
+    return Decimal(number).quantize(Decimal('0.01'))

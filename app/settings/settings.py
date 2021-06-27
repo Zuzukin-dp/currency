@@ -145,8 +145,8 @@ CELERY_BROKER_URL = 'amqp://localhost'
 
 
 CELERY_BEAT_SCHEDULE = {
-    'privatbank': {
-        'task': 'currency.tasks.print_beats',
+    'parse_privatbank': {
+        'task': 'currency.tasks.parse_privatbank',
         'schedule': crontab(minute='*/1'),
     },
 }

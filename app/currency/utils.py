@@ -30,3 +30,25 @@ def to_decimal(number: str) -> Decimal:
     :returns a number as a string, rounded to two decimal places:
     """
     return Decimal(number).quantize(Decimal('0.01'))
+
+
+def iso_4217_convert(curr_type):
+    """
+    function converts letter or digital code in accordance with the international standard ISO 4217.
+    :return letter or digital code -> str:
+    """
+
+    dict_iso_4217 = {
+                    '959': 'XAU',
+                    '840': 'USD',
+                    '978': 'EUR',
+                    '980': 'UAH',
+                    '985': 'PLN',
+                    }
+    for key, val in dict_iso_4217.items():
+        if str(curr_type) in key:
+            return val
+        elif str(curr_type) in val:
+            return str(key)
+
+    return f'{curr_type} not in dict ISO 4217'

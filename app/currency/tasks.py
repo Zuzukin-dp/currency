@@ -13,14 +13,19 @@ from currency.utils import to_decimal, iso_4217_convert
 #     return f'ContactUs id: {object_id}'
 
 
+def _get_source_currencies(url):
+    response = requests.get(url)
+    response.raise_for_status()
+    currencies = response.json()
+    return currencies
+
+
 @shared_task
 def parse_privatbank():
     from currency.models import Rate
 
     url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
-    response = requests.get(url)
-    response.raise_for_status()
-    currencies = response.json()
+    currencies = _get_source_currencies(url)
 
     available_currency_type = ('USD', 'EUR')
     source = 'privatbank'
@@ -51,9 +56,7 @@ def parse_monobank():
     from currency.models import Rate
 
     url = 'https://api.monobank.ua/bank/currency'
-    response = requests.get(url)
-    response.raise_for_status()
-    currencies = response.json()
+    currencies = _get_source_currencies(url)
 
     available_currency_type = (840, 978)
     basic_currency_type = (980,)

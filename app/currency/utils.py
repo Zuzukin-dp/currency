@@ -32,7 +32,7 @@ def to_decimal(number: str) -> Decimal:
     return Decimal(number).quantize(Decimal('0.01'))
 
 
-def iso_4217_convert(curr_type):
+def iso_4217_convert(curr_type: any) -> str:
     """
     function converts letter or digital code in accordance with the international standard ISO 4217.
     :return letter or digital code -> str:

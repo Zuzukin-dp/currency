@@ -52,3 +52,21 @@ def iso_4217_convert(curr_type: any) -> str:
             return str(key)
 
     return f'{curr_type} not in dict ISO 4217'
+
+
+def convert_currency_type(curr_type: str) -> str:
+    """
+    the function converts a non-standard currency type,
+    the dictionary can be supplemented
+    """
+    currency_dict = {
+        'Dollar': 'USD',
+        'Euro': 'EUR',
+    }
+    for key, val in currency_dict.items():
+        if str(curr_type) in key:
+            return val
+        elif str(curr_type) in val:
+            return str(key)
+
+    return f'{curr_type} not in currency_dict'

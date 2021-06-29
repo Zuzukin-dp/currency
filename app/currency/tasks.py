@@ -3,7 +3,7 @@ from celery import shared_task
 from django.core.mail import send_mail
 import requests
 
-from currency.utils import to_decimal, iso_4217_convert
+from currency.utils import to_decimal, iso_4217_convert, convert_currency_type
 
 
 # @shared_task
@@ -71,7 +71,8 @@ def parse_monobank():
         ):
             buy = to_decimal(curr['rateBuy'])
             sale = to_decimal(curr['rateSell'])
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(source=source, cur_type=iso_4217_convert(currency_type)).\
+                order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -80,6 +81,38 @@ def parse_monobank():
             ):
                 Rate.objects.create(
                     cur_type=iso_4217_convert(currency_type),
+                    sale=sale,
+                    buy=buy,
+                    source=source,
+                )
+
+
+@shared_task
+def parse_vkurse_dp_ua():
+    from currency.models import Rate
+
+    url = 'http://vkurse.dp.ua/course.json'
+    currencies = _get_source_currencies(url)
+
+    available_currency_type = ('Dollar', 'Euro')
+    source = 'vkurse.dp.ua'
+
+    for key, val in currencies.items():
+        currency_type = key
+        if key in available_currency_type:
+            buy = to_decimal(val['buy'])
+            sale = to_decimal(val['sale'])
+
+            previous_rate = Rate.objects.filter(source=source, cur_type=convert_currency_type(currency_type)).\
+                order_by('created').last()
+            # check if new rate should be create
+            if (
+                    previous_rate is None or  # rate does not exists, create first one
+                    previous_rate.sale != sale or  # check if sale was changed after last check
+                    previous_rate.buy != buy
+            ):
+                Rate.objects.create(
+                    cur_type=convert_currency_type(currency_type),
                     sale=sale,
                     buy=buy,
                     source=source,

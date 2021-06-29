@@ -153,6 +153,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'currency.tasks.parse_monobank',
         'schedule': crontab(minute='*/5'),
     },
+    'parse_vkurse_dp_ua': {
+        'task': 'currency.tasks.parse_vkurse_dp_ua',
+        'schedule': crontab(minute='*/1'),
+    },
 }
 
 try:

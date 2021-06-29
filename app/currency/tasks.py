@@ -71,6 +71,9 @@ def parse_monobank():
         ):
             buy = to_decimal(curr['rateBuy'])
             sale = to_decimal(curr['rateSell'])
+
+            # in the selection by the cur_type field, a function for reverse conversion of the currency type
+            # has been added, in accordance with the Rate model
             previous_rate = Rate.objects.filter(source=source, cur_type=iso_4217_convert(currency_type)).\
                 order_by('created').last()
             # check if new rate should be create
@@ -103,6 +106,8 @@ def parse_vkurse_dp_ua():
             buy = to_decimal(val['buy'])
             sale = to_decimal(val['sale'])
 
+            # in the selection by the cur_type field, a function for reverse conversion of the currency type
+            # has been added, in accordance with the Rate model
             previous_rate = Rate.objects.filter(source=source, cur_type=convert_currency_type(currency_type)).\
                 order_by('created').last()
             # check if new rate should be create

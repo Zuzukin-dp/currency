@@ -1,4 +1,5 @@
 from celery import shared_task
+from bs4 import BeautifulSoup
 
 from django.core.mail import send_mail
 import requests
@@ -118,6 +119,55 @@ def parse_vkurse_dp_ua():
             ):
                 Rate.objects.create(
                     cur_type=convert_currency_type(currency_type),
+                    sale=sale,
+                    buy=buy,
+                    source=source,
+                )
+
+
+@shared_task
+def parse_oschadbank():
+    from currency.models import Rate
+
+    url = 'https://www.oschadbank.ua/ua'
+    # parameter to prevent blocking
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
+                             '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
+               }
+
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    items = soup.findAll('div', class_='paragraph paragraph--type--exchange-rates '
+                                       'paragraph--view-mode--default currency-item', limit=3)
+
+    currencies = []
+
+    for curr in items:
+        currencies.append({
+            'c_type': curr.find('span', class_='currency-sign').get_text(strip=True),
+            # look for a "strong" tag, select by element number, get the "data-buy" value
+            'buy': curr.findAll('strong')[0].get('data-buy'),
+            'sale': curr.findAll('strong')[1].get('data-sell'),
+        })
+
+    available_currency_type = ('USD', 'EUR')
+    source = 'oschadbank'
+
+    for curr in currencies:
+        currency_type = curr['c_type']
+        if currency_type in available_currency_type:
+            buy = to_decimal(curr['buy'])
+            sale = to_decimal(curr['sale'])
+
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            # check if new rate should be create
+            if (
+                    previous_rate is None or  # rate does not exists, create first one
+                    previous_rate.sale != sale or  # check if sale was changed after last check
+                    previous_rate.buy != buy
+            ):
+                Rate.objects.create(
+                    cur_type=currency_type,
                     sale=sale,
                     buy=buy,
                     source=source,

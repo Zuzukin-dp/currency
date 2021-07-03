@@ -151,10 +151,14 @@ CELERY_BEAT_SCHEDULE = {
     },
     'parse_monobank': {
         'task': 'currency.tasks.parse_monobank',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/1'),
     },
     'parse_vkurse_dp_ua': {
         'task': 'currency.tasks.parse_vkurse_dp_ua',
+        'schedule': crontab(minute='*/1'),
+    },
+    'parse_oschadbank': {
+        'task': 'currency.tasks.parse_oschadbank',
         'schedule': crontab(minute='*/1'),
     },
 }

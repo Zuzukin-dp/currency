@@ -174,6 +174,54 @@ def parse_oschadbank():
                 )
 
 
+@shared_task
+def parse_alfabank():
+    from currency.models import Rate
+
+    url = 'https://alfabank.ua/'
+    # parameter to prevent blocking
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
+                             '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
+               }
+
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    items = soup.findAll('div', class_='currency-block', limit=3)
+
+    currencies = []
+
+    for curr in items:
+        currencies.append({
+            'c_type': curr.find('div', class_='title').get_text(strip=True),
+            # look for a "span" tag, select by element number, get text
+            'buy': curr.findAll('span')[1].get_text(strip=True),
+            'sale': curr.findAll('span')[3].get_text(strip=True),
+        })
+    available_currency_type = ('USD', 'EUR')
+    source = 'alfabank'
+
+    for curr in currencies:
+        currency_type = curr['c_type']
+        if currency_type in available_currency_type:
+            buy = to_decimal(curr['buy'])
+            sale = to_decimal(curr['sale'])
+
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            # check if new rate should be create
+            if (
+                    previous_rate is None or  # rate does not exists, create first one
+                    previous_rate.sale != sale or  # check if sale was changed after last check
+                    previous_rate.buy != buy
+            ):
+                Rate.objects.create(
+                    cur_type=currency_type,
+                    sale=sale,
+                    buy=buy,
+                    source=source,
+                )
+
+
+
 @shared_task(
     autoretry_for=(Exception,),
     retry_kwargs={

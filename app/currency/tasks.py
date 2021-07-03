@@ -146,8 +146,8 @@ def parse_oschadbank():
         currencies.append({
             'c_type': curr.find('span', class_='currency-sign').get_text(strip=True),
             # look for a "strong" tag, select by element number, get the "data-buy" value
-            'buy': curr.findAll('strong')[0].get('data-buy'),
-            'sale': curr.findAll('strong')[1].get('data-sell'),
+            'buy': curr.findAll('strong')[0].get_text(strip=True),
+            'sale': curr.findAll('strong')[1].get_text(strip=True),
         })
 
     available_currency_type = ('USD', 'EUR')

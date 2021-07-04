@@ -1,7 +1,6 @@
-from decimal import Decimal
-
 import random
 import string
+from decimal import Decimal
 
 # import requests
 # import csv

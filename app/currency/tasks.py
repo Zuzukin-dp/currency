@@ -1,12 +1,14 @@
-from celery import shared_task
+import json
+
 from bs4 import BeautifulSoup
 
+from celery import shared_task
+
+from currency.utils import convert_currency_type, iso_4217_convert, to_decimal
+
 from django.core.mail import send_mail
-import json
+
 import requests
-
-from currency.utils import to_decimal, iso_4217_convert, convert_currency_type
-
 
 # @shared_task
 # def print_hallo(object_id):

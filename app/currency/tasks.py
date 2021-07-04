@@ -2,6 +2,7 @@ from celery import shared_task
 from bs4 import BeautifulSoup
 
 from django.core.mail import send_mail
+import json
 import requests
 
 from currency.utils import to_decimal, iso_4217_convert, convert_currency_type
@@ -220,6 +221,45 @@ def parse_alfabank():
                     source=source,
                 )
 
+
+@shared_task
+def parse_raiffeisen():
+    from currency.models import Rate
+
+    url = 'https://raiffeisen.ua/'
+    #
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
+                             '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
+               }
+
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    items = soup.findAll('div', class_="bank-info__wrap")
+    items = items[0].find('currency-table')[':currencies']
+    currencies = json.loads(items)
+
+    available_currency_type = ('USD', 'EUR')
+    source = 'raiffeisen'
+
+    for curr in currencies:
+        currency_type = curr['currency']
+        if currency_type in available_currency_type:
+            buy = to_decimal(curr['rate_buy'])
+            sale = to_decimal(curr['rate_sell'])
+
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            # check if new rate should be create
+            if (
+                    previous_rate is None or  # rate does not exists, create first one
+                    previous_rate.sale != sale or  # check if sale was changed after last check
+                    previous_rate.buy != buy
+            ):
+                Rate.objects.create(
+                    cur_type=currency_type,
+                    sale=sale,
+                    buy=buy,
+                    source=source,
+                )
 
 
 @shared_task(

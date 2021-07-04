@@ -165,6 +165,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'currency.tasks.parse_alfabank',
         'schedule': crontab(minute='*/1'),
     },
+    'parse_raiffeisen': {
+        'task': 'currency.tasks.parse_raiffeisen',
+        'schedule': crontab(minute='*/1'),
+    },
 }
 
 try:

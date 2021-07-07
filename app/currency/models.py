@@ -2,7 +2,17 @@ from django.db import models
 
 
 class Rate(models.Model):
+
+    RATE_TYPE_USD = 10
+    RATE_TYPE_EUR = 11
+
+    RATE_TYPE_CHOICES = (
+        (RATE_TYPE_USD, 'Dollar'),
+        (RATE_TYPE_EUR, 'Euro'),
+    )
+
     cur_type = models.CharField(max_length=5)
+    cur_type_new = models.PositiveSmallIntegerField(choices=RATE_TYPE_CHOICES, default=222)
     sale = models.DecimalField(max_digits=5, decimal_places=2)
     buy = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)

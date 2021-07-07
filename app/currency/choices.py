@@ -1,0 +1,7 @@
+RATE_TYPE_USD = 10
+RATE_TYPE_EUR = 11
+
+RATE_TYPE_CHOICES = (
+    (RATE_TYPE_USD, 'Dollar'),
+    (RATE_TYPE_EUR, 'Euro'),
+)

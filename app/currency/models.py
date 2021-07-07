@@ -11,8 +11,7 @@ class Rate(models.Model):
         (RATE_TYPE_EUR, 'Euro'),
     )
 
-    cur_type = models.CharField(max_length=5)
-    cur_type_new = models.PositiveSmallIntegerField(choices=RATE_TYPE_CHOICES, default=222)
+    cur_type = models.PositiveSmallIntegerField(choices=RATE_TYPE_CHOICES)
     sale = models.DecimalField(max_digits=5, decimal_places=2)
     buy = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)

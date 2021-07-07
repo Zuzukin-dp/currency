@@ -11,8 +11,8 @@ def forwards(apps, schema_editor):
         rate.save()
 
 
-# def backwards(apps, schema_editor):
-#     print('HELLO FROM BACKWARDS')
+def backwards(apps, schema_editor):
+    print('HELLO FROM BACKWARDS')
 
 
 class Migration(migrations.Migration):

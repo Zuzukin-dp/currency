@@ -28,5 +28,10 @@ class Source(models.Model):
 class Analytics(models.Model):
     path = models.CharField(max_length=255)
     counter = models.PositiveBigIntegerField()
-    reuest_method = models.PositiveSmallIntegerField(choices=choices.REQUEST_METHOD_CHOICES)
+    request_method = models.PositiveSmallIntegerField(choices=choices.REQUEST_METHOD_CHOICES)
+    status = models.PositiveSmallIntegerField()
 
+    class Meta:
+        unique_together = [
+            ['path', 'request_method'],
+        ]

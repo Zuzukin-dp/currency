@@ -23,3 +23,10 @@ class Source(models.Model):
     phone = models.CharField(max_length=20)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class Analytics(models.Model):
+    path = models.CharField(max_length=255)
+    counter = models.PositiveBigIntegerField()
+    reuest_method = models.PositiveSmallIntegerField(choices=choices.REQUEST_METHOD_CHOICES)
+

@@ -90,8 +90,7 @@ def parse_monobank():
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).\
-                order_by('created').last()
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -113,19 +112,23 @@ def parse_vkurse_dp_ua():
     url = 'http://vkurse.dp.ua/course.json'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = ('Dollar', 'Euro')
+    available_currency_type = {
+        'Dollar': choices.RATE_TYPE_USD,
+        'Euro': choices.RATE_TYPE_EUR,
+    }
+
     source = 'vkurse.dp.ua'
 
     for key, val in currencies.items():
         currency_type = key
         if key in available_currency_type:
+            currency_type = available_currency_type[key]
             buy = to_decimal(val['buy'])
             sale = to_decimal(val['sale'])
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=convert_currency_type(currency_type)).\
-                order_by('created').last()
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -133,7 +136,7 @@ def parse_vkurse_dp_ua():
                     previous_rate.buy != buy
             ):
                 Rate.objects.create(
-                    cur_type=convert_currency_type(currency_type),
+                    cur_type=currency_type,
                     sale=sale,
                     buy=buy,
                     source=source,

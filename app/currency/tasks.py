@@ -69,8 +69,12 @@ def parse_monobank():
     url = 'https://api.monobank.ua/bank/currency'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = (840, 978)
+    available_currency_type = {
+        840: choices.RATE_TYPE_USD,
+        978: choices.RATE_TYPE_EUR,
+    }
     basic_currency_type = (980,)
+
     source = 'monobank'
 
     for curr in currencies:
@@ -80,12 +84,13 @@ def parse_monobank():
                 currency_type in available_currency_type and
                 basic_type in basic_currency_type
         ):
+            currency_type = available_currency_type[curr['currencyCodeA']]
             buy = to_decimal(curr['rateBuy'])
             sale = to_decimal(curr['rateSell'])
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=iso_4217_convert(currency_type)).\
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).\
                 order_by('created').last()
             # check if new rate should be create
             if (
@@ -94,7 +99,7 @@ def parse_monobank():
                     previous_rate.buy != buy
             ):
                 Rate.objects.create(
-                    cur_type=iso_4217_convert(currency_type),
+                    cur_type=currency_type,
                     sale=sale,
                     buy=buy,
                     source=source,

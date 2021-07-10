@@ -264,12 +264,16 @@ def parse_raiffeisen():
     items = items[0].find('currency-table')[':currencies']
     currencies = json.loads(items)
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
     source = 'raiffeisen'
 
     for curr in currencies:
         currency_type = curr['currency']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['currency']]
             buy = to_decimal(curr['rate_buy'])
             sale = to_decimal(curr['rate_sell'])
 

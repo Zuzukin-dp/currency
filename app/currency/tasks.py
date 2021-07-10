@@ -8,6 +8,8 @@ from currency.utils import convert_currency_type, iso_4217_convert, to_decimal
 
 from django.core.mail import send_mail
 
+from currency import choices
+
 import requests
 
 # @shared_task
@@ -31,12 +33,17 @@ def parse_privatbank():
     url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
+
     source = 'privatbank'
 
     for curr in currencies:
         currency_type = curr['ccy']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['ccy']]
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 

@@ -168,12 +168,17 @@ def parse_oschadbank():
             'sale': curr.findAll('strong')[1].get_text(strip=True),
         })
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
+
     source = 'oschadbank'
 
     for curr in currencies:
         currency_type = curr['c_type']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['c_type']]
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 

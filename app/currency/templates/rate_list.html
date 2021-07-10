@@ -5,6 +5,7 @@
 <a href="/currency/rate/create/">Create Rate</a>
 -->
   <button onclick="location.href='{% url 'currency:rate-create' %}';">Create Rate</button>
+<br>
 
   <table border="3">
     <thead>
@@ -23,7 +24,7 @@
       {%for rate in object_list%}
       <tr>
         <td>{{ rate.id }}</td>
-        <td>{{ rate.cur_type }}</td>
+        <td>{{ rate.get_cur_type_display }}</td>
         <td>{{ rate.sale }}</td>
         <td>{{ rate.buy }}</td>
         <td>{{ rate.created }}</td>
@@ -31,9 +32,13 @@
 <!--
         <td><a href="/currency/rate/details/{{ rate.id }}/">Details</a></td>
         <td><a href="/currency/rate/update/{{ rate.id }}/">Edit</a></td>
--->
         <td><a href="{% url 'currency:rate-details' rate.id %}">Details</a></td>
         <td><a href="{% url 'currency:rate-update' rate.id %}">Edit</a></td>
+-->
+
+        <td><button onclick="location.href='{% url 'currency:rate-details' rate.id %}';">Details</button></td>>
+        <td><button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button></td>>
+
       </tr>
       {% endfor %}
 

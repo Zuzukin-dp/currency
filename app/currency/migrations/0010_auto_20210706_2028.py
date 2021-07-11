@@ -12,7 +12,7 @@ def forwards(apps, schema_editor):
 
 
 def backwards(apps, schema_editor):
-    print('HELLO FROM BACKWARDS')
+    print('HELLO FROM BACKWARDS') # noqa
 
 
 class Migration(migrations.Migration):

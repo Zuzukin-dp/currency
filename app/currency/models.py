@@ -1,5 +1,6 @@
-from django.db import models
 from currency import choices
+
+from django.db import models
 
 
 class Rate(models.Model):

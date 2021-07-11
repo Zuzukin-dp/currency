@@ -1,7 +1,7 @@
-from django.db.models import F
-
-from currency.models import Analytics
 from currency import choices
+from currency.models import Analytics
+
+from django.db.models import F
 
 
 class AnalyticsMiddleware:

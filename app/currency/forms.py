@@ -1,4 +1,4 @@
-from currency.models import ContactUs, Rate, Source
+from currency.models import Analytics, ContactUs, Rate, Source
 
 from django import forms
 
@@ -31,4 +31,15 @@ class SourceForm(forms.ModelForm):
             'name',
             'url',
             'phone',
+        )
+
+
+class AnalyticsForm(forms.ModelForm):
+    class Meta:
+        model = Analytics
+        fields = (
+            'path',
+            'counter',
+            'request_method',
+            'status',
         )

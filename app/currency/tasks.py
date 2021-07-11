@@ -4,11 +4,10 @@ from bs4 import BeautifulSoup
 
 from celery import shared_task
 
-from currency.utils import convert_currency_type, iso_4217_convert, to_decimal
+from currency import choices
+from currency.utils import to_decimal
 
 from django.core.mail import send_mail
-
-from currency import choices
 
 import requests
 

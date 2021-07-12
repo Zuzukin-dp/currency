@@ -1,44 +1,42 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
+
 <!--
 <a href="/currency/rate/create/">Create Rate</a>
--->
+
   <button onclick="location.href='{% url 'currency:rate-create' %}';">Create Rate</button>
+-->
 <br>
 
   <table border="3">
     <thead>
       <tr align="center">
         <th>ID</th>
-        <th>Type</th>
-        <th>Sale</th>
-        <th>Buy</th>
-        <th>Created</th>
-        <th>Source</th>
-        <th>Details</th>
-        <th>Edit</th>
+        <th>Path</th>
+        <th>Counter</th>
+        <th>Method</th>
+        <th>Status Code</th>
       </tr>
     </thead>
     <tbody>
       {%for rate in object_list%}
       <tr>
         <td>{{ rate.id }}</td>
-        <td>{{ rate.get_cur_type_display }}</td>
-        <td>{{ rate.sale }}</td>
-        <td>{{ rate.buy }}</td>
-        <td>{{ rate.created }}</td>
-        <td>{{ rate.source }}</td>
+        <td>{{ rate.path }}</td>
+        <td>{{ rate.counter }}</td>
+        <td>{{ rate.get_request_method_display }}</td>
+        <td>{{ rate.status }}</td>
 <!--
         <td><a href="/currency/rate/details/{{ rate.id }}/">Details</a></td>
         <td><a href="/currency/rate/update/{{ rate.id }}/">Edit</a></td>
         <td><a href="{% url 'currency:rate-details' rate.id %}">Details</a></td>
         <td><a href="{% url 'currency:rate-update' rate.id %}">Edit</a></td>
--->
+
 
         <td><button onclick="location.href='{% url 'currency:rate-details' rate.id %}';">Details</button></td>>
         <td><button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button></td>>
-
+-->
       </tr>
       {% endfor %}
 

@@ -1,7 +1,7 @@
 # from annoying.functions import get_object_or_None
 
 from currency.forms import ContactUsForm, RateForm, SourceForm
-from currency.models import ContactUs, Rate, Source
+from currency.models import Analytics, ContactUs, Rate, Source
 from currency.tasks import task_send_email
 from currency.utils import generate_password as gp, read_txt
 
@@ -26,7 +26,12 @@ def requirements(request):
     return HttpResponse(reader)
 
 
-class RateLitView(ListView):
+class AnalyticsView(ListView):
+    queryset = Analytics.objects.all()
+    template_name = 'analytics_list.html'
+
+
+class RateListView(ListView):
     queryset = Rate.objects.all()
     template_name = 'rate_list.html'
 
@@ -55,7 +60,7 @@ class RateDeleteView(DeleteView):
     success_url = reverse_lazy('index')
 
 
-class SourceLitView(ListView):
+class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
 
@@ -84,7 +89,7 @@ class SourceDeleteView(DeleteView):
     success_url = reverse_lazy('index')
 
 
-class ContactUsLitView(ListView):
+class ContactUsListView(ListView):
     queryset = ContactUs.objects.all()
     template_name = 'contactus_list.html'
 

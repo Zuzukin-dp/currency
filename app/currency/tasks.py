@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 
 from celery import shared_task
 
-from currency.utils import convert_currency_type, iso_4217_convert, to_decimal
+from currency import choices
+from currency.utils import to_decimal
 
 from django.core.mail import send_mail
 
@@ -31,12 +32,17 @@ def parse_privatbank():
     url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
+
     source = 'privatbank'
 
     for curr in currencies:
         currency_type = curr['ccy']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['ccy']]
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
@@ -62,8 +68,12 @@ def parse_monobank():
     url = 'https://api.monobank.ua/bank/currency'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = (840, 978)
+    available_currency_type = {
+        840: choices.RATE_TYPE_USD,
+        978: choices.RATE_TYPE_EUR,
+    }
     basic_currency_type = (980,)
+
     source = 'monobank'
 
     for curr in currencies:
@@ -73,13 +83,13 @@ def parse_monobank():
                 currency_type in available_currency_type and
                 basic_type in basic_currency_type
         ):
+            currency_type = available_currency_type[curr['currencyCodeA']]
             buy = to_decimal(curr['rateBuy'])
             sale = to_decimal(curr['rateSell'])
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=iso_4217_convert(currency_type)).\
-                order_by('created').last()
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -87,7 +97,7 @@ def parse_monobank():
                     previous_rate.buy != buy
             ):
                 Rate.objects.create(
-                    cur_type=iso_4217_convert(currency_type),
+                    cur_type=currency_type,
                     sale=sale,
                     buy=buy,
                     source=source,
@@ -101,19 +111,23 @@ def parse_vkurse_dp_ua():
     url = 'http://vkurse.dp.ua/course.json'
     currencies = _get_source_currencies(url)
 
-    available_currency_type = ('Dollar', 'Euro')
+    available_currency_type = {
+        'Dollar': choices.RATE_TYPE_USD,
+        'Euro': choices.RATE_TYPE_EUR,
+    }
+
     source = 'vkurse.dp.ua'
 
     for key, val in currencies.items():
         currency_type = key
         if key in available_currency_type:
+            currency_type = available_currency_type[key]
             buy = to_decimal(val['buy'])
             sale = to_decimal(val['sale'])
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=convert_currency_type(currency_type)).\
-                order_by('created').last()
+            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -121,7 +135,7 @@ def parse_vkurse_dp_ua():
                     previous_rate.buy != buy
             ):
                 Rate.objects.create(
-                    cur_type=convert_currency_type(currency_type),
+                    cur_type=currency_type,
                     sale=sale,
                     buy=buy,
                     source=source,
@@ -153,12 +167,17 @@ def parse_oschadbank():
             'sale': curr.findAll('strong')[1].get_text(strip=True),
         })
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
+
     source = 'oschadbank'
 
     for curr in currencies:
         currency_type = curr['c_type']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['c_type']]
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
@@ -200,12 +219,16 @@ def parse_alfabank():
             'buy': curr.findAll('span')[1].get_text(strip=True),
             'sale': curr.findAll('span')[3].get_text(strip=True),
         })
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
     source = 'alfabank'
 
     for curr in currencies:
         currency_type = curr['c_type']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['c_type']]
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
@@ -240,12 +263,16 @@ def parse_raiffeisen():
     items = items[0].find('currency-table')[':currencies']
     currencies = json.loads(items)
 
-    available_currency_type = ('USD', 'EUR')
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
     source = 'raiffeisen'
 
     for curr in currencies:
         currency_type = curr['currency']
         if currency_type in available_currency_type:
+            currency_type = available_currency_type[curr['currency']]
             buy = to_decimal(curr['rate_buy'])
             sale = to_decimal(curr['rate_sell'])
 

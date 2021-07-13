@@ -4,7 +4,8 @@ from django.db import models
 
 
 class Source(models.Model):
-    name = models.CharField(max_length=12)
+    name = models.CharField(max_length=64)
+    code_name = models.CharField(max_length=64, unique=True)
     url = models.URLField(max_length=255)
     original_url = models.URLField(max_length=255)
     phone = models.CharField(max_length=20)

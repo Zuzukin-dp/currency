@@ -32,7 +32,7 @@ class AnalyticsView(ListView):
 
 
 class RateListView(ListView):
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('bank')
     template_name = 'rate_list.html'
 
 

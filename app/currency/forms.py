@@ -10,7 +10,7 @@ class RateForm(forms.ModelForm):
             'cur_type',
             'sale',
             'buy',
-            'source',
+            'bank',
         )
 
 
@@ -29,7 +29,9 @@ class SourceForm(forms.ModelForm):
         model = Source
         fields = (
             'name',
+            'code_name',
             'url',
+            'original_url',
             'phone',
         )
 

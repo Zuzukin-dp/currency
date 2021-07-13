@@ -149,29 +149,38 @@ CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
         'task': 'currency.tasks.parse_privatbank',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
     'parse_monobank': {
         'task': 'currency.tasks.parse_monobank',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
     'parse_vkurse_dp_ua': {
         'task': 'currency.tasks.parse_vkurse_dp_ua',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
     'parse_oschadbank': {
         'task': 'currency.tasks.parse_oschadbank',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
     'parse_alfabank': {
         'task': 'currency.tasks.parse_alfabank',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
     'parse_raiffeisen': {
         'task': 'currency.tasks.parse_raiffeisen',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
     },
 }
+
+SHELL_PLUS_IMPORTS = [
+    'from currency.tasks import parse_privatbank',
+    'from currency.tasks import parse_monobank',
+    'from currency.tasks import parse_vkurse_dp_ua',
+    'from currency.tasks import parse_oschadbank',
+    'from currency.tasks import parse_alfabank',
+    'from currency.tasks import parse_raiffeisen',
+]
 
 try:
     from settings.settings_local import *  # noqa

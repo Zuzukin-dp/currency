@@ -4,6 +4,11 @@ from django import forms
 
 
 class RateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['bank'].empty_label = "Select Bank"
+        self.fields['cur_type'].empty_label = "Select Currency"
+
     class Meta:
         model = Rate
         fields = (

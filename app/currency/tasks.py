@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from celery import shared_task
 
-from currency import choices
+from currency import choices, consts
 from currency.utils import to_decimal
 
 from django.core.mail import send_mail
@@ -27,17 +27,16 @@ def _get_source_currencies(url):
 
 @shared_task
 def parse_privatbank():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
-    currencies = _get_source_currencies(url)
+    bank = Source.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
+
+    currencies = _get_source_currencies(bank.url)
 
     available_currency_type = {
         'USD': choices.RATE_TYPE_USD,
         'EUR': choices.RATE_TYPE_EUR,
     }
-
-    source = 'privatbank'
 
     for curr in currencies:
         currency_type = curr['ccy']
@@ -46,7 +45,7 @@ def parse_privatbank():
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -57,7 +56,7 @@ def parse_privatbank():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
                 )
 
 

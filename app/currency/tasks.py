@@ -62,18 +62,17 @@ def parse_privatbank():
 
 @shared_task
 def parse_monobank():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'https://api.monobank.ua/bank/currency'
-    currencies = _get_source_currencies(url)
+    bank = Source.objects.get(code_name=consts.CODE_NAME_MONOBANK)
+
+    currencies = _get_source_currencies(bank.url)
 
     available_currency_type = {
         840: choices.RATE_TYPE_USD,
         978: choices.RATE_TYPE_EUR,
     }
     basic_currency_type = (980,)
-
-    source = 'monobank'
 
     for curr in currencies:
         currency_type = curr['currencyCodeA']
@@ -88,7 +87,7 @@ def parse_monobank():
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -99,26 +98,27 @@ def parse_monobank():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
+                    # source=source,
                 )
 
 
 @shared_task
 def parse_vkurse_dp_ua():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'http://vkurse.dp.ua/course.json'
-    currencies = _get_source_currencies(url)
+    bank = Source.objects.get(code_name=consts.CODE_NAME_VKURSE)
+    currencies = _get_source_currencies(bank.url)
 
     available_currency_type = {
         'Dollar': choices.RATE_TYPE_USD,
         'Euro': choices.RATE_TYPE_EUR,
     }
 
-    source = 'vkurse.dp.ua'
+    # source = 'vkurse.dp.ua'
 
     for key, val in currencies.items():
-        currency_type = key
+        # currency_type = key
         if key in available_currency_type:
             currency_type = available_currency_type[key]
             buy = to_decimal(val['buy'])
@@ -126,7 +126,7 @@ def parse_vkurse_dp_ua():
 
             # in the selection by the cur_type field, a function for reverse conversion of the currency type
             # has been added, in accordance with the Rate model
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -137,21 +137,22 @@ def parse_vkurse_dp_ua():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
                 )
 
 
 @shared_task
 def parse_oschadbank():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'https://www.oschadbank.ua/ua'
+    bank = Source.objects.get(code_name=consts.CODE_NAME_OSCHADBANK)
+
     # parameter to prevent blocking
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
                              '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
                }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(bank.url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     items = soup.findAll('div', class_='paragraph paragraph--type--exchange-rates '
                                        'paragraph--view-mode--default currency-item', limit=3)
@@ -171,8 +172,6 @@ def parse_oschadbank():
         'EUR': choices.RATE_TYPE_EUR,
     }
 
-    source = 'oschadbank'
-
     for curr in currencies:
         currency_type = curr['c_type']
         if currency_type in available_currency_type:
@@ -180,7 +179,7 @@ def parse_oschadbank():
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -191,21 +190,22 @@ def parse_oschadbank():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
                 )
 
 
 @shared_task
 def parse_alfabank():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'https://alfabank.ua/'
+    bank = Source.objects.get(code_name=consts.CODE_NAME_ALFABANK)
+
     # parameter to prevent blocking
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
                              '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
                }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(bank.url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     items = soup.findAll('div', class_='currency-block', limit=3)
 
@@ -222,7 +222,6 @@ def parse_alfabank():
         'USD': choices.RATE_TYPE_USD,
         'EUR': choices.RATE_TYPE_EUR,
     }
-    source = 'alfabank'
 
     for curr in currencies:
         currency_type = curr['c_type']
@@ -231,7 +230,7 @@ def parse_alfabank():
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -242,21 +241,22 @@ def parse_alfabank():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
                 )
 
 
 @shared_task
 def parse_raiffeisen():
-    from currency.models import Rate
+    from currency.models import Source, Rate
 
-    url = 'https://raiffeisen.ua/'
+    bank = Source.objects.get(code_name=consts.CODE_NAME_RAIFFEISEN)
+
     #
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit 537.36'
                              '(KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
                }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(bank.url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     items = soup.findAll('div', class_="bank-info__wrap")
     items = items[0].find('currency-table')[':currencies']
@@ -266,7 +266,6 @@ def parse_raiffeisen():
         'USD': choices.RATE_TYPE_USD,
         'EUR': choices.RATE_TYPE_EUR,
     }
-    source = 'raiffeisen'
 
     for curr in currencies:
         currency_type = curr['currency']
@@ -275,7 +274,7 @@ def parse_raiffeisen():
             buy = to_decimal(curr['rate_buy'])
             sale = to_decimal(curr['rate_sell'])
 
-            previous_rate = Rate.objects.filter(source=source, cur_type=currency_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, cur_type=currency_type).order_by('created').last()
             # check if new rate should be create
             if (
                     previous_rate is None or  # rate does not exists, create first one
@@ -286,7 +285,7 @@ def parse_raiffeisen():
                     cur_type=currency_type,
                     sale=sale,
                     buy=buy,
-                    source=source,
+                    bank=bank,
                 )
 
 

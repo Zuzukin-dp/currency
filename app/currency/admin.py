@@ -20,18 +20,18 @@ class RateAdmin(ImportExportModelAdmin):
         'buy',
         'sale',
         'cur_type',
-        'source',
+        'bank',
         'created',
     )
     list_filter = (
         ('created', DateTimeRangeFilter),
         'cur_type',
-        'source',
+        'bank',
         'created',
     )
     search_fields = (
         'cur_type',
-        'source',
+        'bank',
     )
     readonly_fields = (
         'buy',
@@ -55,7 +55,9 @@ class SourceAdmin(ImportExportModelAdmin):
     list_display = (
         'id',
         'name',
+        'code_name',
         'url',
+        'original_url',
         'phone',
         'created',
         'updated',

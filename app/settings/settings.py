@@ -14,6 +14,8 @@ from pathlib import Path
 
 from celery.schedules import crontab
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -184,6 +186,10 @@ SHELL_PLUS_IMPORTS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 try:
     from settings.settings_local import *  # noqa

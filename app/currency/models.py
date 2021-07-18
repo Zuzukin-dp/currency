@@ -39,5 +39,5 @@ class Analytics(models.Model):
 
     class Meta:
         unique_together = [
-            ['path', 'request_method'],
+            ['path', 'request_method', 'status'],
         ]

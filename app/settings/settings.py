@@ -183,6 +183,8 @@ SHELL_PLUS_IMPORTS = [
     'from currency.tasks import parse_raiffeisen',
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 try:
     from settings.settings_local import *  # noqa
 except ImportError:

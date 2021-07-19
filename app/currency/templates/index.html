@@ -34,6 +34,11 @@
         <button onclick="location.href='{% url 'logout' %}';">LogOut</button>
       </td>
     </tr>
+    <tr align="center">
+      <td>
+        <button onclick="location.href='{% url 'accounts:my-profile' %}';">My Profile</button>
+      </td>
+    </tr>
     {% else %}
     <tr align="center">
       <td>

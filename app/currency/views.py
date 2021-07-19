@@ -1,5 +1,7 @@
 # from annoying.functions import get_object_or_None
 
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import Analytics, ContactUs, Rate, Source
 from currency.tasks import task_send_email
@@ -36,9 +38,12 @@ class RateListView(ListView):
     template_name = 'rate_list.html'
 
 
-class RateDetailView(DetailView):
+class RateDetailView(UserPassesTestMixin, DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_details.html'
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
 
 class CreateRate(CreateView):
@@ -48,16 +53,22 @@ class CreateRate(CreateView):
     success_url = reverse_lazy('index')
 
 
-class RateUpdateView(UpdateView):
+class RateUpdateView(UserPassesTestMixin, UpdateView):
     queryset = Rate.objects.all()
     form_class = RateForm
     template_name = 'rate_update.html'
     success_url = reverse_lazy('index')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDeleteView(DeleteView):
+
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     queryset = Rate.objects.all()
     success_url = reverse_lazy('index')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class SourceListView(ListView):

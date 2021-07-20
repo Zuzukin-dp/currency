@@ -35,8 +35,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    # 'django.contrib.admin',
+    # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -50,7 +50,13 @@ INSTALLED_APPS = [
 
     'currency',
     'accounts',
+
+    'django.contrib.admin',
+    'django.contrib.auth',
 ]
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,7 +150,10 @@ INTERNAL_IPS = [
     '0.0.0.0',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = BASE_DIR / 'emails'
+
 
 CELERY_BROKER_URL = 'amqp://localhost'
 

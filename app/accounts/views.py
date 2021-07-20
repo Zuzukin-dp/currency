@@ -5,6 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import User
 
+from django.contrib.auth import views as auth_views
+
+
 
 class MyProfile(LoginRequiredMixin, UpdateView):
     queryset = User.objects.all()

@@ -1,12 +1,9 @@
 # from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 from accounts.models import User
 
-from django.contrib.auth import views as auth_views
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 
 
 class MyProfile(LoginRequiredMixin, UpdateView):

@@ -27,5 +27,34 @@
         <button onclick="location.href='{% url 'admin:index' %}';">A D M I N</button>
       </td>
     </tr>
+
+    {% if request.user.is_authenticated %}
+    <tr align="center">
+      <td>
+        <button onclick="location.href='{% url 'logout' %}';">LogOut</button>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <button onclick="location.href='{% url 'accounts:my-profile' %}';">My Profile</button>
+      </td>
+    </tr>
+    {% else %}
+    <tr align="center">
+      <td>
+        <button onclick="location.href='{% url 'login' %}';">LogIn</button>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <button onclick="location.href='{% url 'password_reset' %}';">Reset Password</button>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <button onclick="location.href='#';">Sing Up</button>
+      </td>
+    </tr>
+    {% endif %}
   </table>
 {% endblock main_content %}

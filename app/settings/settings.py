@@ -14,6 +14,8 @@ from pathlib import Path
 
 from celery.schedules import crontab
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,8 +35,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    # 'django.contrib.admin',
+    # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -47,7 +49,14 @@ INSTALLED_APPS = [
     'import_export',
 
     'currency',
+    'accounts',
+
+    'django.contrib.admin',
+    'django.contrib.auth',
 ]
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,7 +150,10 @@ INTERNAL_IPS = [
     '0.0.0.0',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = BASE_DIR / 'emails'
+
 
 CELERY_BROKER_URL = 'amqp://localhost'
 
@@ -181,6 +193,12 @@ SHELL_PLUS_IMPORTS = [
     'from currency.tasks import parse_alfabank',
     'from currency.tasks import parse_raiffeisen',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 try:
     from settings.settings_local import *  # noqa

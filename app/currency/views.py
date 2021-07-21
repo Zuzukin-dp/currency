@@ -6,6 +6,7 @@ from currency.tasks import task_send_email
 from currency.utils import generate_password as gp, read_txt
 
 # from django.core.mail import send_mail
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -36,9 +37,12 @@ class RateListView(ListView):
     template_name = 'rate_list.html'
 
 
-class RateDetailView(DetailView):
+class RateDetailView(UserPassesTestMixin, DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_details.html'
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
 
 class CreateRate(CreateView):
@@ -48,16 +52,22 @@ class CreateRate(CreateView):
     success_url = reverse_lazy('index')
 
 
-class RateUpdateView(UpdateView):
+class RateUpdateView(UserPassesTestMixin, UpdateView):
     queryset = Rate.objects.all()
     form_class = RateForm
     template_name = 'rate_update.html'
     success_url = reverse_lazy('index')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDeleteView(DeleteView):
+
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     queryset = Rate.objects.all()
     success_url = reverse_lazy('index')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class SourceListView(ListView):

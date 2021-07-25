@@ -1,9 +1,12 @@
-# from django.shortcuts import render
+from annoying.functions import get_object_or_None
+
+from accounts.forms import SignUpForm
 from accounts.models import User
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import CreateView, UpdateView, RedirectView
 
 
 class MyProfile(LoginRequiredMixin, UpdateView):
@@ -22,3 +25,39 @@ class MyProfile(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class SingUp(CreateView):
+    model = User
+    template_name = 'signup.html'
+    success_url = reverse_lazy('index')
+    form_class = SignUpForm
+
+
+class ActivateAccount(RedirectView):
+    pattern_name = 'index'
+
+    def get_redirect_url(self, *args, **kwargs):
+        activation_key = kwargs.pop('username')
+        user = get_object_or_None(User.objects.only('is_active'), username=activation_key)
+
+        """
+        messages.debug(request, '%s SQL statements were executed.' % count)
+        messages.info(request, 'Three credits remain in your account.')
+        messages.success(request, 'Profile details updated.')
+        messages.warning(request, 'Your account expires in three days.')
+        messages.error(request, 'Document deleted.')
+        """
+
+        if user:
+            if user.is_active:
+                messages.warning(
+                    self.request, 'Your account is already activated.')
+            else:
+                messages.info(
+                    self.request, 'Thanks for activating your account.')
+                user.is_active = True
+                user.save(update_fields=('is_active', ))
+
+        response = super().get_redirect_url(*args, **kwargs)
+        return response

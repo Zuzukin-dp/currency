@@ -55,9 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
 ]
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -147,16 +144,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = [
     '127.0.0.1',
-    '0.0.0.0',
+    # '0.0.0.0',
 ]
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
-# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# EMAIL_FILE_PATH = BASE_DIR / 'emails'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 
 CELERY_BROKER_URL = 'amqp://localhost'
-
 
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
@@ -199,6 +192,8 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+DOMAIN = 'http://127.0.0.1:8000'  # TODO
 
 try:
     from settings.settings_local import *  # noqa

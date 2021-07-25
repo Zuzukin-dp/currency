@@ -2,6 +2,7 @@ from annoying.functions import get_object_or_None
 
 from accounts.forms import SignUpForm
 from accounts.models import User
+from accounts.tokens import account_activation_token
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,6 +40,7 @@ class ActivateAccount(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         activation_key = kwargs.pop('username')
+        activation_token = kwargs.pop('token')
         user = get_object_or_None(User.objects.only('is_active'), username=activation_key)
 
         """
@@ -49,7 +51,7 @@ class ActivateAccount(RedirectView):
         messages.error(request, 'Document deleted.')
         """
 
-        if user:
+        if user and account_activation_token.check_token(user, activation_token):
             if user.is_active:
                 messages.warning(
                     self.request, 'Your account is already activated.')

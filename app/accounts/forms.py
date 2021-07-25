@@ -6,6 +6,7 @@ from django.shortcuts import reverse
 
 from accounts.models import User
 from accounts.tasks import send_registration_email
+from accounts.tokens import account_activation_token
 
 
 class SignUpForm(forms.ModelForm):
@@ -35,13 +36,14 @@ class SignUpForm(forms.ModelForm):
         instance.username = str(uuid.uuid4())
         instance.is_active = False
         instance.set_password(self.cleaned_data['password1'])
+        token_key = account_activation_token.make_token(instance)
 
         if commit:
             instance.save()
 
         body = f"""
         Activate Your Account
-        {settings.DOMAIN}{reverse('accounts:activate-account', args=(instance.username,))}
+        {settings.DOMAIN}{reverse('accounts:activate-account', args=(instance.username, token_key,))}
         """
         send_registration_email.delay(body, instance.email)
         return instance

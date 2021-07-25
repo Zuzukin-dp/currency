@@ -1,13 +1,13 @@
-from annoying.functions import get_object_or_None
-
 from accounts.forms import SignUpForm
 from accounts.models import User
 from accounts.tokens import account_activation_token
 
+from annoying.functions import get_object_or_None
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, RedirectView
+from django.views.generic import CreateView, RedirectView, UpdateView
 
 
 class MyProfile(LoginRequiredMixin, UpdateView):

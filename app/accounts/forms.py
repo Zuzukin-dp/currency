@@ -1,12 +1,12 @@
 import uuid
 
-from django import forms
-from django.conf import settings
-from django.shortcuts import reverse
-
 from accounts.models import User
 from accounts.tasks import send_registration_email
 from accounts.tokens import account_activation_token
+
+from django import forms
+from django.conf import settings
+from django.shortcuts import reverse
 
 
 class SignUpForm(forms.ModelForm):

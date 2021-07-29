@@ -2,39 +2,33 @@
 
 {% block main_content %}
 
-<!--<a href="/currency/rate/create/">Create Rate</a>-->
+  <button onclick="location.href='{% url 'currency:rate-create' %}'">Create Rate</button>
+<br/>
 
-  <button onclick="location.href='{% url 'currency:rate-create' %}';">Create Rate</button>
-<br>
-
-  <table border="3">
+  <table class="table table-striped" border="3">
     <thead>
       <tr align="center">
-        <th>ID</th>
-        <th>Type</th>
-        <th>Sale</th>
-        <th>Buy</th>
-        <th>Created</th>
-        <th>Source</th>
-        <th>Details</th>
-        <th>Edit</th>
+        <th scope="col">#</th>
+        <th scope="col"> ID</th>
+        <th scope="col">Type</th>
+        <th scope="col">Sale</th>
+        <th scope="col">Buy</th>
+        <th scope="col">Created</th>
+        <th scope="col">Source</th>
+        <th scope="col">Details</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <tbody>
       {%for rate in object_list%}
-      <tr>
+      <tr align="center">
+        <th scope="row">{{forloop.counter}}</th>
         <td>{{ rate.id }}</td>
         <td>{{ rate.get_cur_type_display }}</td>
         <td>{{ rate.sale }}</td>
         <td>{{ rate.buy }}</td>
         <td>{{ rate.created }}</td>
         <td>{{ rate.bank.name }}</td>
-<!--
-        <td><a href="/currency/rate/details/{{ rate.id }}/">Details</a></td>
-        <td><a href="/currency/rate/update/{{ rate.id }}/">Edit</a></td>
-        <td><a href="{% url 'currency:rate-details' rate.id %}">Details</a></td>
-        <td><a href="{% url 'currency:rate-update' rate.id %}">Edit</a></td>
--->
 
         <td><button onclick="location.href='{% url 'currency:rate-details' rate.id %}';">Details</button></td>>
         <td><button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button></td>>

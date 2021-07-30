@@ -1,6 +1,11 @@
 from currency import choices
 
 from django.db import models
+from django.templatetags.static import static
+
+
+def source_directory_path(instance, filename):
+    return 'uploads/source_logo/{0}/{1}'.format(instance.id, filename)
 
 
 class Source(models.Model):
@@ -11,6 +16,12 @@ class Source(models.Model):
     phone = models.CharField(max_length=20)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    source_logo = models.FileField(null=True, blank=True, default=None, upload_to=source_directory_path)
+
+    def get_source_logo_url(self):
+        if self.source_logo:
+            return self.source_logo.url
+        return static('img/default-source-logo.jpg')
 
 
 class Rate(models.Model):

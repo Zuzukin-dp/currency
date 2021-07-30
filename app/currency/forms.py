@@ -38,6 +38,8 @@ class SourceForm(forms.ModelForm):
             'url',
             'original_url',
             'phone',
+            'source_logo',
+
         )
 
 

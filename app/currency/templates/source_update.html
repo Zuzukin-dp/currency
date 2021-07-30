@@ -8,6 +8,7 @@
   <div class="row">
     <div class="col">
 <!--      1 of 2-->
+        <h2> ID: {{ form.instance.id}} </h2>
     </div>
     <div class="col">
 <!--      2 of 2-->
@@ -15,12 +16,11 @@
   </div>
   <div class="row">
     <div class="col">
-            <h2> ID: {{ form.instance.id}} </h2>
-
+        <img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="300" align="left" alt="Cinque Terre"/>
 <!--      1 of 3-->
     </div>
     <div class="col">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form | crispy }}
       <button type="submit">Save</button>

@@ -6,6 +6,7 @@
   <thead>
     <tr align="">
       <th>ID</th>
+      <th>Logo</th>
       <th>Name</th>
       <th>URL</th>
       <th>Phone number</th>
@@ -16,6 +17,7 @@
   <tbody>
    <tr>
       <td>{{ object.id }}</td>
+      <td><img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="50" align="center" alt="Cinque Terre"/></td>
       <td>{{ object.name }}</td>
       <td>{{ object.url }}</td>
       <td>{{ object.phone }}</td>

@@ -9,6 +9,7 @@
     <tr align="center">
       <th scope="col">#</th>
       <th scope="col">ID</th>
+      <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">URL</th>
       <th scope="col">Phone number</th>
@@ -23,6 +24,7 @@
     <tr>
       <th scope="row">{{forloop.counter}}</th>
       <td scope="row">{{ source.id }}</td>
+      <td scope="row"><img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="50" align="center" alt="Cinque Terre"/></td>
       <td scope="row">{{ source.name }}</td>
       <td scope="row">{{ source.url }}</td>
       <td scope="row">{{ source.phone }}</td>

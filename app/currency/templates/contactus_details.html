@@ -3,24 +3,24 @@
 {% block main_content %}
 
 <table class="table table-striped" border="3">
-  <thead>
+    <thead>
     <tr align="">
-      <th>ID</th>
-      <th>EmailFrom</th>
-      <th>Subject</th>
-      <th>Message</th>
-      <th>Created</th>
+        <th>ID</th>
+        <th>EmailFrom</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Created</th>
     </tr>
-  </thead>
-  <tbody>
-   <tr>
-      <td>{{ object.id }}</td>
-      <td>{{ object.email_from }}</td>
-      <td>{{ object.subject }}</td>
-      <td>{{ object.message }}</td>
-      <td>{{ object.created }}</td>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.email_from }}</td>
+        <td>{{ object.subject }}</td>
+        <td>{{ object.message }}</td>
+        <td>{{ object.created }}</td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 
 {% endblock main_content %}

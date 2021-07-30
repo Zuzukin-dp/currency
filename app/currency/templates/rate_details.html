@@ -3,26 +3,26 @@
 {% block main_content %}
 
 <table class="table table-striped" border="3">
-  <thead>
+    <thead>
     <tr align="">
-      <th>ID</th>
-      <th>Type</th>
-      <th>Sale</th>
-      <th>Buy</th>
-      <th>Created</th>
-      <th>Source</th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Sale</th>
+        <th>Buy</th>
+        <th>Created</th>
+        <th>Source</th>
     </tr>
-  </thead>
-  <tbody>
-   <tr>
-      <td>{{ object.id }}</td>
-      <td>{{ object.cur_type }}</td>
-      <td>{{ object.sale }}</td>
-      <td>{{ object.buy }}</td>
-      <td>{{ object.created }}</td>
-      <td>{{ object.bank.name }}</td>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.cur_type }}</td>
+        <td>{{ object.sale }}</td>
+        <td>{{ object.buy }}</td>
+        <td>{{ object.created }}</td>
+        <td>{{ object.bank.name }}</td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 
 {% endblock main_content %}

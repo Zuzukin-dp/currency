@@ -5,37 +5,44 @@
 <button onclick="location.href='{% url 'currency:source-create' %}';">Create Source</button>
 <br>
 <table class="table table-striped" border="3">
-  <thead>
+    <thead>
     <tr align="center">
-      <th scope="col">#</th>
-      <th scope="col">ID</th>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">URL</th>
-      <th scope="col">Phone number</th>
-      <th scope="col">Created</th>
-      <th scope="col">Updated</th>
-      <th scope="col">Details</th>
-      <th scope="col">Edit</th>
+        <th scope="col">#</th>
+        <th scope="col">ID</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">URL</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Created</th>
+        <th scope="col">Updated</th>
+        <th scope="col">Details</th>
+        <th scope="col">Edit</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     {%for source in object_list%}
     <tr>
-      <th scope="row">{{forloop.counter}}</th>
-      <td scope="row">{{ source.id }}</td>
-      <td scope="row"><img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="50" align="center" alt="Cinque Terre"/></td>
-      <td scope="row">{{ source.name }}</td>
-      <td scope="row">{{ source.url }}</td>
-      <td scope="row">{{ source.phone }}</td>
-      <td scope="row">{{ source.created }}</td>
-      <td scope="row">{{ source.updated }}</td>
-      <td scope="row"><button onclick="location.href='{% url 'currency:source-details' source.id %}';">Details</button></td>>
-      <td scope="row"><button onclick="location.href='{% url 'currency:source-update' source.id %}';">Edit</button></td>>
+        <th scope="row">{{forloop.counter}}</th>
+        <td scope="row">{{ source.id }}</td>
+        <td scope="row"><img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="50"
+                             align="center" alt="Cinque Terre"/></td>
+        <td scope="row">{{ source.name }}</td>
+        <td scope="row">{{ source.url }}</td>
+        <td scope="row">{{ source.phone }}</td>
+        <td scope="row">{{ source.created }}</td>
+        <td scope="row">{{ source.updated }}</td>
+        <td scope="row">
+            <button onclick="location.href='{% url 'currency:source-details' source.id %}';">Details</button>
+        </td>
+        >
+        <td scope="row">
+            <button onclick="location.href='{% url 'currency:source-update' source.id %}';">Edit</button>
+        </td>
+        >
     </tr>
     {% endfor %}
 
-  </tbody>
+    </tbody>
 </table>
 
 {% endblock main_content %}

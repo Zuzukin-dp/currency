@@ -9,27 +9,27 @@
 -->
 <br>
 
-  <table class="table table-striped" border="3">
+<table class="table table-striped" border="3">
     <thead>
-      <tr >
+    <tr>
         <th scope="col">ID</th>
         <th scope="col">Path</th>
         <th scope="col">Counter</th>
         <th scope="col">Method</th>
         <th scope="col">Status Code</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-      {%for rate in object_list%}
-      <tr>
+    {%for rate in object_list%}
+    <tr>
         <td scope="row">{{ rate.id }}</td>
         <td scope="row">{{ rate.path }}</td>
         <td scope="row">{{ rate.counter }}</td>
         <td scope="row">{{ rate.get_request_method_display }}</td>
         <td scope="row">{{ rate.status }}</td>
-      </tr>
-      {% endfor %}
+    </tr>
+    {% endfor %}
 
     </tbody>
-  </table>
+</table>
 {% endblock main_content %}

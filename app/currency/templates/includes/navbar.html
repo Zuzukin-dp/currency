@@ -31,6 +31,7 @@
       <span class="navbar-text">
         {% if request.user.is_authenticated %}
         <span class="navbar-text">
+        <img src="{{ request.user.get_avatar_url }}" class="rounded mx-auto d-block rounded-circle" width="50" align="left" alt="Cinque Terre"/>
         <button onclick="location.href='{% url 'logout' %}';">LogOut</button>
         <button onclick="location.href='{% url 'accounts:my-profile' %}';">My Profile</button>
         </span>

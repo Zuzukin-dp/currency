@@ -9,34 +9,24 @@
 -->
 <br>
 
-  <table border="3">
+  <table class="table table-striped" border="3">
     <thead>
-      <tr align="center">
-        <th>ID</th>
-        <th>Path</th>
-        <th>Counter</th>
-        <th>Method</th>
-        <th>Status Code</th>
+      <tr >
+        <th scope="col">ID</th>
+        <th scope="col">Path</th>
+        <th scope="col">Counter</th>
+        <th scope="col">Method</th>
+        <th scope="col">Status Code</th>
       </tr>
     </thead>
     <tbody>
       {%for rate in object_list%}
       <tr>
-        <td>{{ rate.id }}</td>
-        <td>{{ rate.path }}</td>
-        <td>{{ rate.counter }}</td>
-        <td>{{ rate.get_request_method_display }}</td>
-        <td>{{ rate.status }}</td>
-<!--
-        <td><a href="/currency/rate/details/{{ rate.id }}/">Details</a></td>
-        <td><a href="/currency/rate/update/{{ rate.id }}/">Edit</a></td>
-        <td><a href="{% url 'currency:rate-details' rate.id %}">Details</a></td>
-        <td><a href="{% url 'currency:rate-update' rate.id %}">Edit</a></td>
-
-
-        <td><button onclick="location.href='{% url 'currency:rate-details' rate.id %}';">Details</button></td>>
-        <td><button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button></td>>
--->
+        <td scope="row">{{ rate.id }}</td>
+        <td scope="row">{{ rate.path }}</td>
+        <td scope="row">{{ rate.counter }}</td>
+        <td scope="row">{{ rate.get_request_method_display }}</td>
+        <td scope="row">{{ rate.status }}</td>
       </tr>
       {% endfor %}
 

@@ -4,28 +4,34 @@
 
 <button onclick="location.href='{% url 'currency:contactus-create' %}';">Create Contact</button>
 
-<table border="3">
+<br><br>
+
+
+<table class="table table-striped" border="3">
   <thead>
     <tr align="center">
-      <th>ID</th>
-      <th>EmailFrom</th>
-      <th>Subject</th>
-      <th>Message</th>
-      <th>Created</th>
-      <th>Details</th>
-      <th>Edit</th>
+      <th scope="col">ID</th>
+      <th scope="col">EmailFrom</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Message</th>
+      <th scope="col">Created</th>
+      <th scope="col">Details</th>
+      <th scope="col">Edit</th>
     </tr>
   </thead>
   <tbody>
     {%for contactus in object_list%}
     <tr>
-      <td>{{ contactus.id }}</td>
-      <td>{{ contactus.email_from }}</td>
-      <td>{{ contactus.subject }}</td>
-      <td>{{ contactus.message }}</td>
-      <td>{{ contactus.created }}</td>
-      <td><a href="{% url 'currency:contactus-details' contactus.id %}">Details</a></td>
-      <td><a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a></td>
+      <td scope="row">{{ contactus.id }}</td>
+      <td scope="row">{{ contactus.email_from }}</td>
+      <td scope="row">{{ contactus.subject }}</td>
+      <td scope="row">{{ contactus.message }}</td>
+      <td scope="row">{{ contactus.created }}</td>
+      <td scope="row"><button onclick="location.href='{% url 'currency:contactus-details' contactus.id %}';">Details</button></td>>
+      <td scope="row"><button onclick="location.href='{% url 'currency:contactus-update' contactus.id %}';">Edit</button></td>>
+
+<!--      <td><a href="{% url 'currency:contactus-details' contactus.id %}">Details</a></td>-->
+<!--      <td><a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a></td>-->
     </tr>
     {% endfor %}
 

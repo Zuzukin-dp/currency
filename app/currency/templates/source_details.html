@@ -2,27 +2,30 @@
 
 {% block main_content %}
 
-<table border="3">
-  <thead>
-    <tr align="center">
-      <th>ID</th>
-      <th>Name</th>
-      <th>URL</th>
-      <th>Phone number</th>
-      <th>Created</th>
-      <th>Updated</th>
+<table class="table table-striped" border="3">
+    <thead>
+    <tr align="">
+        <th>ID</th>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>URL</th>
+        <th>Phone number</th>
+        <th>Created</th>
+        <th>Updated</th>
     </tr>
-  </thead>
-  <tbody>
-   <tr>
-      <td>{{ object.id }}</td>
-      <td>{{ object.name }}</td>
-      <td>{{ object.url }}</td>
-      <td>{{ object.phone }}</td>
-      <td>{{ object.created }}</td>
-      <td>{{ object.updated }}</td>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ object.id }}</td>
+        <td><img src="{{ source.get_source_logo_url }}" class="rounded mx-auto d-block" width="50" align="center"
+                 alt="Cinque Terre"/></td>
+        <td>{{ object.name }}</td>
+        <td>{{ object.url }}</td>
+        <td>{{ object.phone }}</td>
+        <td>{{ object.created }}</td>
+        <td>{{ object.updated }}</td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 
 {% endblock main_content %}

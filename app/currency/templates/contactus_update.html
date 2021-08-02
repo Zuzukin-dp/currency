@@ -1,16 +1,40 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block main_content %}
 
-ID: {{ form.instance.id}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <!--      1 of 2-->
+        </div>
+        <div class="col">
+            <!--      2 of 2-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2> ID: {{ form.instance.id}} </h2>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+            <!--      1 of 3-->
+        </div>
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit">Save</button>
+                <br><br>
+                <button onclick="location.href='{% url 'currency:contactus-delete' form.instance.id %}';">Delete
+                </button>
+            </form>
+        </div>
+        <div class="col">
+            <!--      3 of 3-->
+        </div>
+    </div>
+</div>
 
-<button onclick="location.href='{% url 'currency:contactus-delete' form.instance.id %}';">Delete</button>
 <!--
 <a href="/currency/source/delete/{{form.instance.id}}/">Delete</a>
 -->

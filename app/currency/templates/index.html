@@ -1,60 +1,82 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
-  <table border="5">
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'currency:rate-list' %}';">Rate List</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'currency:source-list' %}';">Source List</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'currency:contactus-list' %}';">ContactUs List</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'currency:analytics-list' %}';">Analytics</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'admin:index' %}';">A D M I N</button>
-      </td>
-    </tr>
+<!--  <table border="5">-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'currency:rate-list' %}';">Rate List</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'currency:source-list' %}';">Source List</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'currency:contactus-list' %}';">ContactUs List</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'currency:analytics-list' %}';">Analytics</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'admin:index' %}';">A D M I N</button>-->
+<!--      </td>-->
+<!--    </tr>-->
 
-    {% if request.user.is_authenticated %}
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'logout' %}';">LogOut</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'accounts:my-profile' %}';">My Profile</button>
-      </td>
-    </tr>
-    {% else %}
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'login' %}';">LogIn</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'password_reset' %}';">Reset Password</button>
-      </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <button onclick="location.href='{% url 'accounts:signup' %}';">Sign Up</button>
-      </td>
-    </tr>
-    {% endif %}
-  </table>
+<!--    {% if request.user.is_authenticated %}-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'logout' %}';">LogOut</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'accounts:my-profile' %}';">My Profile</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    {% else %}-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'login' %}';">LogIn</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'password_reset' %}';">Reset Password</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--      <td>-->
+<!--        <button onclick="location.href='{% url 'accounts:signup' %}';">Sign Up</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    {% endif %}-->
+<!--  </table>-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            1 of 2
+        </div>
+        <div class="col">
+            2 of 2
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            1 of 3
+        </div>
+        <div class="col">
+            2 of 3
+        </div>
+        <div class="col">
+            3 of 3
+        </div>
+    </div>
+</div>
+
 {% endblock main_content %}

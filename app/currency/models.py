@@ -23,6 +23,9 @@ class Source(models.Model):
             return self.source_logo.url
         return static('img/default-source-logo.jpg')
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Rate(models.Model):
     cur_type = models.PositiveSmallIntegerField(choices=choices.RATE_TYPE_CHOICES)
@@ -33,6 +36,9 @@ class Rate(models.Model):
         Source,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f'Rate id: {self.id} {self.bank_id}'
 
 
 class ContactUs(models.Model):

@@ -19,13 +19,9 @@ class RateViewSet(viewsets.ModelViewSet):
         return RateSerializer
 
 
-def get(request, format=None):
-
-    return Response(choices.RATE_TYPE_CHOICES)
-
-
 class RateTypeChoiceView(APIView):
-    pass
+    def get(self, request, format=None):
+        return Response(choices.RATE_TYPE_CHOICES)
 
 # class RateList(generics.ListCreateAPIView):
 #     queryset = Rate.objects.all()

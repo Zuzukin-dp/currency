@@ -7,10 +7,10 @@ from currency.utils import generate_password as gp, read_txt
 
 # from django.core.mail import send_mail
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
 
 def generate_pass(request):
@@ -143,3 +143,19 @@ class ContactUsUpdateView(UpdateView):
 class ContactUsDeleteView(DeleteView):
     queryset = ContactUs.objects.all()
     success_url = reverse_lazy('index')
+
+
+# class RateListApi(View):
+#     def get(self, request):
+#         rates = Rate.objects.all()
+#         results = []
+#         for rate in rates:
+#             results.append({
+#                 'id': rate.id,
+#                 'sale': float(rate.sale),
+#                 'buy': float(rate.buy),
+#                 'bank': rate.bank_id,
+#             })
+#         import json
+#         # return HttpResponse(json.dumps(results), content_type='application/json')
+#         return JsonResponse(results, safe=False)

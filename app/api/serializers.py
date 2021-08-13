@@ -1,8 +1,19 @@
 from rest_framework import serializers
-from currency.models import Rate
+from currency.models import Rate, Source
+
+
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = (
+            'id',
+            'name',
+            'code_name',
+        )
 
 
 class RateSerializer(serializers.ModelSerializer):
+    bank_object = SourceSerializer(source='bank', read_only=True)
 
     class Meta:
         model = Rate
@@ -11,9 +22,13 @@ class RateSerializer(serializers.ModelSerializer):
             'buy',
             'sale',
             'cur_type',
-            'cur_type',
+            'bank_object',
             'bank',
         )
+
+        extra_kwargs = {
+            'bank': {'write_only': True},
+        }
 
 
 class RateDetailsSerializer(serializers.ModelSerializer):
@@ -25,7 +40,6 @@ class RateDetailsSerializer(serializers.ModelSerializer):
             'buy',
             'sale',
             'created',
-            'cur_type',
             'cur_type',
             'bank',
         )

@@ -1,8 +1,8 @@
 # from rest_framework import generics
 from api.throttles import AnonUserRateThrottle
-from currency.models import Rate
+from currency.models import Rate, Source
 from currency import choices
-from api.serializers import RateSerializer, RateDetailsSerializer
+from api.serializers import RateSerializer, RateDetailsSerializer, SourceSerializer, SourceDetailsSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,6 +11,22 @@ from api.filters import RateFilter
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
 from django.shortcuts import render
+
+
+def api_list_page(request):
+    return render(request, 'api_list.html')
+
+
+class SourceListView(viewsets.ModelViewSet):
+    queryset = Source.objects.all().order_by('created')
+    # serializer_class = SourceDetailsSerializer
+
+    def get_serializer_class(self):
+        if 'pk' in self.kwargs:
+            # queryset = Source.objects.all().prefetch_related('rates_set')
+            # breakpoint()
+            return SourceDetailsSerializer
+        return SourceSerializer
 
 
 class RateViewSet(viewsets.ModelViewSet):
@@ -34,10 +50,6 @@ class RateViewSet(viewsets.ModelViewSet):
 class RateTypeChoiceView(APIView):
     def get(self, request, format=None):
         return Response(choices.RATE_TYPE_CHOICES)
-
-
-def api_list_page(request):
-    return render(request, 'api_list.html')
 
 
 # class RateList(generics.ListCreateAPIView):

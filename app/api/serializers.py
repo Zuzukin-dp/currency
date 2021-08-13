@@ -8,12 +8,55 @@ class SourceSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+            'original_url',
+            'created',
+        )
+
+
+class RateObjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Rate
+        fields = (
+            'id',
+            'buy',
+            'sale',
+            'created',
+            'cur_type',
+            'bank',
+        )
+
+
+class SourceDetailsSerializer(serializers.ModelSerializer):
+    rates_set = RateObjectSerializer(source='id', many=True)
+
+    class Meta:
+        model = Source
+        fields = (
+            'id',
+            'name',
+            'url',
+            'original_url',
+            'phone',
+            'created',
+            'updated',
+            'source_logo',
+            'rates_set',
+        )
+
+
+class SourceObjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = (
+            'id',
+            'name',
             'code_name',
         )
 
 
 class RateSerializer(serializers.ModelSerializer):
-    bank_object = SourceSerializer(source='bank', read_only=True)
+    bank_object = SourceObjectSerializer(source='bank', read_only=True)
 
     class Meta:
         model = Rate

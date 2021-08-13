@@ -10,7 +10,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.pagination import ContactUsPagination, RatePagination
-from api.filters import RateFilter
+from api.filters import ContactUsFilter, RateFilter
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
 from django.shortcuts import render
@@ -53,7 +53,15 @@ class RateViewSet(viewsets.ModelViewSet):
 class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all().order_by('-created')
     pagination_class = ContactUsPagination
-    serializer_class = ContactUsSerializer
+    # serializer_class = ContactUsSerializer
+    throttle_classes = [AnonUserRateThrottle]
+    filterset_class = ContactUsFilter
+    filter_backends = (filters.DjangoFilterBackend,
+                       rest_framework_filters.OrderingFilter,
+                       rest_framework_filters.SearchFilter,
+                       )
+    ordering_fields = ['id', 'email_from', 'subject', 'message', 'created']
+    search_fields = ['id', 'email_from', 'subject', 'message', 'created']
 
     def get_serializer_class(self):
         # breakpoint()

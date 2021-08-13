@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from currency.models import Rate, Source
+from currency.models import ContactUs, Rate, Source
+
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 class SourceSerializer(serializers.ModelSerializer):
@@ -28,7 +31,7 @@ class RateObjectSerializer(serializers.ModelSerializer):
 
 
 class SourceDetailsSerializer(serializers.ModelSerializer):
-    rates_set = RateObjectSerializer(source='id', many=True)
+    rates_set = RateObjectSerializer(source='pk', many=True)
 
     class Meta:
         model = Source
@@ -86,3 +89,46 @@ class RateDetailsSerializer(serializers.ModelSerializer):
             'cur_type',
             'bank',
         )
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactUs
+        fields = (
+            'id',
+            'email_from',
+            'subject',
+            'message',
+            'created',
+        )
+
+
+class ContactUsSendMailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactUs
+        fields = (
+            'id',
+            'email_from',
+            'subject',
+            'message',
+            'created',
+        )
+
+    def create(self, validate_data):
+        # breakpoint()
+        instance = super(ContactUsSendMailSerializer, self).create(validate_data)
+        send_mail(
+            'From Django API created instance {}'.format(instance.pk),
+            f'''
+            'From': {validate_data['email_from']}
+            'Topic': {validate_data['subject']}
+            'Message': {validate_data['message']}
+            ''',
+            settings.EMAIL_HOST_USER,
+            [validate_data['email_from']],
+            fail_silently=False,
+        )
+        # breakpoint()
+        return instance

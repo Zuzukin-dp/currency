@@ -162,7 +162,9 @@ INTERNAL_IPS = [
     # '0.0.0.0',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 CELERY_BROKER_URL = 'amqp://localhost'
 

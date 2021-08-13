@@ -1,12 +1,15 @@
 # from rest_framework import generics
 from api.throttles import AnonUserRateThrottle
-from currency.models import Rate, Source
+from currency.models import ContactUs, Rate, Source
 from currency import choices
-from api.serializers import RateSerializer, RateDetailsSerializer, SourceSerializer, SourceDetailsSerializer
+from api.serializers import \
+    ContactUsSerializer, ContactUsSendMailSerializer, \
+    RateSerializer, RateDetailsSerializer,\
+    SourceSerializer, SourceDetailsSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from api.pagination import RatePagination
+from api.pagination import ContactUsPagination, RatePagination
 from api.filters import RateFilter
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
@@ -45,6 +48,18 @@ class RateViewSet(viewsets.ModelViewSet):
         if 'pk' in self.kwargs:
             return RateDetailsSerializer
         return RateSerializer
+
+
+class ContactUsViewSet(viewsets.ModelViewSet):
+    queryset = ContactUs.objects.all().order_by('-created')
+    pagination_class = ContactUsPagination
+    serializer_class = ContactUsSerializer
+
+    def get_serializer_class(self):
+        # breakpoint()
+        if 'create' in self.action:
+            return ContactUsSendMailSerializer
+        return ContactUsSerializer
 
 
 class RateTypeChoiceView(APIView):

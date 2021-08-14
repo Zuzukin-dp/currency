@@ -1,5 +1,6 @@
-from django_filters import rest_framework as filters
 from currency.models import ContactUs, Rate
+
+from django_filters import rest_framework as filters
 
 
 class RateFilter(filters.FilterSet):
@@ -13,7 +14,6 @@ class RateFilter(filters.FilterSet):
 
 
 class ContactUsFilter(filters.FilterSet):
-
     class Meta:
         model = ContactUs
         fields = {

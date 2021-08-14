@@ -1,19 +1,23 @@
-# from rest_framework import generics
-from api.throttles import AnonUserRateThrottle
-from currency.models import ContactUs, Rate, Source
-from currency import choices
+from api.filters import ContactUsFilter, RateFilter
+from api.pagination import ContactUsPagination, RatePagination
 from api.serializers import \
-    ContactUsSerializer, ContactUsSendMailSerializer, \
-    RateSerializer, RateDetailsSerializer,\
-    SourceSerializer, SourceDetailsSerializer
+    ContactUsSendMailSerializer, ContactUsSerializer, \
+    RateDetailsSerializer, RateSerializer, \
+    SourceDetailsSerializer, SourceSerializer
+from api.throttles import AnonUserRateThrottle
+
+from currency import choices
+from currency.models import ContactUs, Rate, Source
+
+from django.shortcuts import render
+
+from django_filters import rest_framework as filters
+
+from rest_framework import filters as rest_framework_filters
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from api.pagination import ContactUsPagination, RatePagination
-from api.filters import ContactUsFilter, RateFilter
-from django_filters import rest_framework as filters
-from rest_framework import filters as rest_framework_filters
-from django.shortcuts import render
+# from rest_framework import generics
 
 
 def api_list_page(request):
@@ -71,7 +75,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
 
 
 class RateTypeChoiceView(APIView):
-    def get(self, request, format=None):
+    def get(self, request, format=None):  # noqa
         return Response(choices.RATE_TYPE_CHOICES)
 
 

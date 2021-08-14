@@ -1,8 +1,9 @@
-from rest_framework import serializers
 from currency.models import ContactUs, Rate, Source
 
 from django.conf import settings
 from django.core.mail import send_mail
+
+from rest_framework import serializers
 
 
 class SourceSerializer(serializers.ModelSerializer):
@@ -17,7 +18,6 @@ class SourceSerializer(serializers.ModelSerializer):
 
 
 class RateObjectSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Rate
         fields = (
@@ -78,7 +78,6 @@ class RateSerializer(serializers.ModelSerializer):
 
 
 class RateDetailsSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Rate
         fields = (
@@ -92,7 +91,6 @@ class RateDetailsSerializer(serializers.ModelSerializer):
 
 
 class ContactUsSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ContactUs
         fields = (
@@ -105,7 +103,6 @@ class ContactUsSerializer(serializers.ModelSerializer):
 
 
 class ContactUsSendMailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ContactUs
         fields = (

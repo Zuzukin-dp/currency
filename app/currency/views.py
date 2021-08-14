@@ -7,10 +7,10 @@ from currency.utils import generate_password as gp, read_txt
 
 # from django.core.mail import send_mail
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 
 def generate_pass(request):

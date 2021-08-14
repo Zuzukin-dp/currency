@@ -49,14 +49,14 @@ class CreateRate(CreateView):
     model = Rate
     form_class = RateForm
     template_name = 'rate_create.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:rate-list')
 
 
 class RateUpdateView(UserPassesTestMixin, UpdateView):
     queryset = Rate.objects.all()
     form_class = RateForm
     template_name = 'rate_update.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:rate-list')
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -64,7 +64,7 @@ class RateUpdateView(UserPassesTestMixin, UpdateView):
 
 class RateDeleteView(UserPassesTestMixin, DeleteView):
     queryset = Rate.objects.all()
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:rate-list')
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -84,19 +84,19 @@ class CreateSource(CreateView):
     model = Source
     form_class = SourceForm
     template_name = 'source_create.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:source-list')
 
 
 class SourceUpdateView(UpdateView):
     queryset = Source.objects.all()
     form_class = SourceForm
     template_name = 'source_update.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:source-list')
 
 
 class SourceDeleteView(DeleteView):
     queryset = Source.objects.all()
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:source-list')
 
 
 class ContactUsListView(ListView):
@@ -114,7 +114,7 @@ class CreateContactUs(CreateView):
     model = ContactUs
     form_class = ContactUsForm
     template_name = 'contactus_create.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:contactus-list')
 
     def form_valid(self, form):
         data = form.cleaned_data
@@ -137,12 +137,12 @@ class ContactUsUpdateView(UpdateView):
     queryset = ContactUs.objects.all()
     form_class = ContactUsForm
     template_name = 'contactus_update.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:contactus-list')
 
 
 class ContactUsDeleteView(DeleteView):
     queryset = ContactUs.objects.all()
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('currency:contactus-list')
 
 
 # class RateListApi(View):

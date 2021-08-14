@@ -31,3 +31,12 @@ worker20:
 
 beat:
 	cd app && celery -A settings beat -l info
+
+pytest:
+	pytest app/tests/ -s -vvv
+
+pytest_cov:
+	pytest app/tests/ --cov=app --cov-report html ## && coverage report --fail-under=80
+
+show-coverage:  ## open coverage HTML report in default browser
+	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"

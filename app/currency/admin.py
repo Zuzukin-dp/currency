@@ -61,6 +61,7 @@ class SourceAdmin(ImportExportModelAdmin):
         'phone',
         'created',
         'updated',
+        'source_logo',
     )
     list_filter = (
         'name',

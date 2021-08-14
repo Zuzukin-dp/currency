@@ -143,3 +143,19 @@ class ContactUsUpdateView(UpdateView):
 class ContactUsDeleteView(DeleteView):
     queryset = ContactUs.objects.all()
     success_url = reverse_lazy('index')
+
+
+# class RateListApi(View):
+#     def get(self, request):
+#         rates = Rate.objects.all()
+#         results = []
+#         for rate in rates:
+#             results.append({
+#                 'id': rate.id,
+#                 'sale': float(rate.sale),
+#                 'buy': float(rate.buy),
+#                 'bank': rate.bank_id,
+#             })
+#         import json
+#         # return HttpResponse(json.dumps(results), content_type='application/json')
+#         return JsonResponse(results, safe=False)

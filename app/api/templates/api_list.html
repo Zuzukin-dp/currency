@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <!--      1 of 3-->
+            <h2> rest_framework </h2>
+
+        </div>
+        <div class="col">
+            <!--      2 of 3-->
+            <h2> drf_yasg</h2>
+
+        </div>
+        <div class="col">
+            <!--      3 of 3-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <!--      1 of 3-->
+            <br><br>
+            <button onclick="location.href='{% url 'api-root' %}';">API ROOT</button>
+            <br><br>
+            <button onclick="">API Rates</button>
+            <br><br>
+            <button onclick="location.href='{% url 'token_obtain_pair' %}';">API Token</button>
+            <br><br>
+            <button onclick="location.href='{% url 'token_refresh' %}';">API Token Refresh</button>
+
+        </div>
+        <div class="col">
+            <br><br>
+            <button onclick="location.href='{% url 'schema-swagger-ui' %}';">API Swagger</button>
+            <br><br>
+            <button onclick="location.href='{% url 'schema-redoc' %}';">API ReDoc</button>
+            <br><br>
+            <button onclick="">API Json</button>
+
+        </div>
+        <div class="col">
+            <!--      3 of 3-->
+            <a class="btn btn-success" href="location.href='{% url 'schema-swagger-ui' %}';" target="_blank">Google</a>
+
+        </div>
+    </div>
+</div>
+
+<!--
+<a href="/currency/rate/delete/{{form.instance.id}}/">Delete</a>
+-->
+{% endblock main_content %}

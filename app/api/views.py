@@ -26,12 +26,10 @@ def api_list_page(request):
 
 class SourceListView(viewsets.ModelViewSet):
     queryset = Source.objects.all().order_by('created')
-    # serializer_class = SourceDetailsSerializer
 
     def get_serializer_class(self):
         if 'pk' in self.kwargs:
-            # queryset = Source.objects.all().prefetch_related('rates_set')
-            # breakpoint()
+            queryset = Source.objects.all().prefetch_related('rate_set')  # noqa
             return SourceDetailsSerializer
         return SourceSerializer
 

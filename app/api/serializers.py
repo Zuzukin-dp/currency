@@ -26,12 +26,12 @@ class RateObjectSerializer(serializers.ModelSerializer):
             'sale',
             'created',
             'cur_type',
-            'bank',
+            # 'bank',
         )
 
 
 class SourceDetailsSerializer(serializers.ModelSerializer):
-    rates_set = RateObjectSerializer(source='pk', many=True)
+    rate_set = RateObjectSerializer(many=True)
 
     class Meta:
         model = Source
@@ -44,7 +44,7 @@ class SourceDetailsSerializer(serializers.ModelSerializer):
             'created',
             'updated',
             'source_logo',
-            'rates_set',
+            'rate_set',
         )
 
 

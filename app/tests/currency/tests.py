@@ -1,10 +1,10 @@
 import pytest
 
 from currency import choices
-from currency.models import Rate, Source
+from currency.models import Rate
 
 
-@pytest.mark.skip  # comment test
+# @pytest.mark.skip  # comment test
 def test_index(client):
     response = client.get('/')
     assert response.status_code == 200
@@ -53,9 +53,8 @@ def test_create_rate_invalid_form_data(client):
     assert Rate.objects.count() == rates_initial_count
 
 
-def test_create_rate_success(client):
+def test_create_rate_success(client, bank):
     rates_initial_count = Rate.objects.count()
-    bank = Source.objects.last()
     form_data = {
         'cur_type': choices.RATE_TYPE_USD,
         'sale': 20,
@@ -68,22 +67,25 @@ def test_create_rate_success(client):
     assert Rate.objects.count() == rates_initial_count + 1
 
 
-def test_update_rate_invalid(client):
+def test_update_rate_invalid(client, rate):
     rates_initial_count = Rate.objects.count()
-    rate = Rate.objects.last()
     response = client.post(f'/currency/rate/update/{rate.pk}/')
     assert response.status_code == 302
     assert response.url == f'/accounts/login/?next=/currency/rate/update/{rate.pk}/'
     assert Rate.objects.count() == rates_initial_count
 
 
-def test_update_rate_success(client, django_user_model):
+def test_update_rate_success(client, django_user_model, rate):
+    """
+    the test is not working properly.
+    1) it is not known that the user is authorized.
+    2) the data in the database is not updated - refresh_from_db ()
+    """
     email = "test_user@test_mail.com"
     username = "test_user@test_mail.com"
     password = "qwerty"
     is_superuser = True
-    # user = django_user_model.objects.create_user(
-    user = django_user_model.objects.create(
+    user = django_user_model.objects.create_user(
         username=username,
         email=email,
         password=password,
@@ -92,17 +94,16 @@ def test_update_rate_success(client, django_user_model):
     client.force_login(user)
 
     rates_initial_count = Rate.objects.count()
-    rate = Rate.objects.last()
     form_data = {
         'cur_type': choices.RATE_TYPE_USD,
         'sale': rate.sale + 10,
-        'buy': rate.buy + 10,
+        'buy': rate.buy - 10,
     }
     response = client.post(f'/currency/rate/update/{rate.pk}/', data=form_data)
     # breakpoint()
     assert response.status_code == 200  # wrong status_code, correct 302
-    # assert Rate.objects.count() == rates_initial_count
-    # rate.refresh_from_db()
+    assert Rate.objects.count() == rates_initial_count
+    rate.refresh_from_db()
     # breakpoint()
     # assert rate.sale == form_data['sale']
 
@@ -119,7 +120,6 @@ def test_create_contact_us(client, mailoutbox, settings, faker):
     assert response.url == '/currency/contactus/list/'
     assert len(mailoutbox) == 1
     mail = mailoutbox[0]
-    # breakpoint()
     assert mail.to == [settings.DEFAULT_FROM_EMAIL]
     assert mail.cc == []
     assert mail.bcc == []
@@ -129,4 +129,3 @@ def test_create_contact_us(client, mailoutbox, settings, faker):
                         f'\n        Topic: {form_data["subject"]}' \
                         f'\n        Message' \
                         f'\n        {form_data["message"]}\n        '
-    # breakpoint()

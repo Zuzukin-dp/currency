@@ -46,7 +46,7 @@ def client_api_auth(django_user_model):
 
 
 @pytest.fixture(scope='function')
-def source(enable_db_access_for_all_tests):
+def bank(enable_db_access_for_all_tests):
     from currency.models import Source
 
     yield Source.objects.last()

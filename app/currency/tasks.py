@@ -8,6 +8,7 @@ from currency import choices, consts
 from currency.utils import to_decimal
 
 from django.core.mail import send_mail
+from django.conf import settings
 
 import requests
 
@@ -299,7 +300,7 @@ def task_send_email(body):
     send_mail(
         'Contact Us from Client',
         body,
-        'pydjantest@gmail.com',
-        ['pydjantest@gmail.com'],
+        settings.EMAIL_HOST_USER,
+        [settings.DEFAULT_FROM_EMAIL],
         fail_silently=False,
     )

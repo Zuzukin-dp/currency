@@ -27,4 +27,3 @@ def test_accounts_signup_post_form_data(client, fake):
     response = client.post('/accounts/signup/', data=form_data)
     assert response.status_code == 200
     # breakpoint()
-

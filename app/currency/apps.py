@@ -16,7 +16,7 @@ class CurrencyConfig(AppConfig):
         # table could be absent before initial migration
         # if Source._meta.db_table in all_tables:
         if 'currency_bank' in all_tables:
-            print('Update Banks Initial Data')
+            # print('Update Banks Initial Data')
             code_name = consts.CODE_NAME_PRIVATBANK
             privatbank_data = {
                 'name': 'PrivatBank',

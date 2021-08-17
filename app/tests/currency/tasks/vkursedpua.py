@@ -1,15 +1,16 @@
-from currency.tasks import parse_vkurse_dp_ua
-from currency.models import Source, Rate
-from currency import consts
 from unittest.mock import MagicMock
+
+from currency import consts
+from currency.models import Rate, Source
+from currency.tasks import parse_vkurse_dp_ua
 
 
 def test_parse_vkurse(mocker):
-    json_mock = lambda: {
+    json_mock = lambda: {  # noqa
         "Dollar": {"buy": "26.70", "sale": "26.85"},
         "Euro": {"buy": "31.32", "sale": "31.45"},
     }
-    requests_get = mocker.patch('requests.get', return_value=MagicMock(json=json_mock))
+    requests_get = mocker.patch('requests.get', return_value=MagicMock(json=json_mock))  # noqa
 
     code_name = consts.CODE_NAME_VKURSE
     vkurse_data = {

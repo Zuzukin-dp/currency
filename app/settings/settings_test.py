@@ -1,4 +1,4 @@
-from settings.settings import *
+from settings.settings import *  # noqa
 
 CELERY_TASK_ALWAYS_EAGER = True
 

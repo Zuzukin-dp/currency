@@ -1,5 +1,6 @@
-import pytest
 from django.core.management import call_command
+
+import pytest
 
 
 @pytest.fixture(autouse=True, scope="function")

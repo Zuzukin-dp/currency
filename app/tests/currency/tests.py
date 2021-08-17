@@ -1,4 +1,4 @@
-import pytest
+# import pytest
 
 from currency import choices
 from currency.models import Rate

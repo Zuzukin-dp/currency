@@ -1,17 +1,18 @@
-from currency.tasks import parse_privatbank
-from currency.models import Source, Rate
-from currency import consts
 from unittest.mock import MagicMock
+
+from currency import consts
+from currency.models import Rate, Source
+from currency.tasks import parse_privatbank
 
 
 def test_parse_privatbank(mocker):
-    json_mock = lambda: [
+    json_mock = lambda: [  # noqa
         {"ccy": "USD", "base_ccy": "UAH", "buy": "26.55000", "sale": "26.95000"},
         {"ccy": "EUR", "base_ccy": "UAH", "buy": "31.60000", "sale": "32.20000"},
         {"ccy": "RUR", "base_ccy": "UAH", "buy": "0.35500", "sale": "0.38500"},
         {"ccy": "BTC", "base_ccy": "USD", "buy": "39316.6209", "sale": "43455.2125"},
     ]
-    requests_get = mocker.patch('requests.get', return_value=MagicMock(json=json_mock))
+    requests_get = mocker.patch('requests.get', return_value=MagicMock(json=json_mock))  # noqa
 
     code_name = consts.CODE_NAME_PRIVATBANK
     privatbank_data = {

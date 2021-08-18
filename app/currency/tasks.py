@@ -7,7 +7,9 @@ from celery import shared_task
 from currency import choices, consts
 from currency.utils import to_decimal
 
+from django.conf import settings
 from django.core.mail import send_mail
+
 
 import requests
 
@@ -299,7 +301,7 @@ def task_send_email(body):
     send_mail(
         'Contact Us from Client',
         body,
-        'pydjantest@gmail.com',
-        ['pydjantest@gmail.com'],
+        settings.EMAIL_HOST_USER,
+        [settings.DEFAULT_FROM_EMAIL],
         fail_silently=False,
     )

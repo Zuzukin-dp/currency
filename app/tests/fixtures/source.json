@@ -1,0 +1,16 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 10,
+    "fields": {
+      "name": "TEST_PrivatBank",
+      "code_name": "test_privatbank",
+      "url": "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5",
+      "original_url": "https://privatbank.ua/",
+      "phone": "3700",
+      "created": "2021-07-18T12:14:37.764Z",
+      "updated": "2021-07-30T21:10:19.284Z",
+      "source_logo": "uploads/source_logo/1/privatbank_logo.png"
+    }
+  }
+]

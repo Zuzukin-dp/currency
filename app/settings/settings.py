@@ -202,6 +202,8 @@ SHELL_PLUS_IMPORTS = [
     'from currency.tasks import parse_oschadbank',
     'from currency.tasks import parse_alfabank',
     'from currency.tasks import parse_raiffeisen',
+    # 'from currency.management.commands.privatbank_exchange_archive import Command',
+    # 'from currency.management.commands.gen_data_contactus import Command',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

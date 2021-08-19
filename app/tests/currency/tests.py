@@ -21,6 +21,12 @@ def test_rate_list(client):
     assert response.status_code == 200
 
 
+def test_latest_rates(client):
+    response = client.get('/currency/rate/latest/')
+    assert response.status_code == 200
+    breakpoint()
+
+
 def test_create_rate_get_form(client):
     response = client.get('/currency/rate/create/')
     assert response.status_code == 200

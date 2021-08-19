@@ -2,6 +2,11 @@ import random
 import string
 from decimal import Decimal
 
+from django.core.cache import cache
+from currency import choices
+from currency import consts
+from currency.models import Rate, Source
+
 # import requests
 # import csv
 # from faker import Faker
@@ -69,3 +74,26 @@ def convert_currency_type(curr_type: str) -> str:
             return str(key)
 
     return f'{curr_type} not in currency_dict'
+
+
+def get_latest_rates():
+
+    # cache implemented as a class, @method_decorator(cache_page(60 * 60 * 8), name='dispatch')
+    if consts.CACHE_KEY_LATEST_RATES in cache:
+        return cache.get(consts.CACHE_KEY_LATEST_RATES)
+
+    # context['object_list'] = []
+    object_list = []
+
+    for source in Source.objects.all():
+        for currency_type, _ in choices.RATE_TYPE_CHOICES:
+            latest_rate = Rate.objects \
+                    .filter(cur_type=currency_type, bank=source) \
+                    .order_by('-created').first()
+            if latest_rate is not None:
+                object_list.append(latest_rate)
+
+    # cache implemented as a class, @method_decorator(cache_page(60 * 60 * 8), name='dispatch')
+    cache.set(consts.CACHE_KEY_LATEST_RATES, object_list, 60 * 60 * 8)
+
+    return object_list

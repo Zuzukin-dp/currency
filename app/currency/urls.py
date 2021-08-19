@@ -2,7 +2,8 @@ from currency.views import (
     AnalyticsView,
     ContactUsDeleteView, ContactUsDetailView, ContactUsListView, ContactUsUpdateView,
     CreateContactUs, CreateRate, CreateSource, RateDeleteView, RateDetailView,
-    RateListView, RateUpdateView, SourceDeleteView, SourceDetailView, SourceListView, SourceUpdateView,
+    RateListView, RateUpdateView, SourceDeleteView, SourceDetailView, SourceListView,
+    SourceUpdateView, LatestRates
 )
 
 from django.urls import path
@@ -10,6 +11,7 @@ from django.urls import path
 app_name = 'currency'
 
 urlpatterns = [
+    path('rate/latest/', LatestRates.as_view(), name='rate-latest'),
     path('rate/list/', RateListView.as_view(), name='rate-list'),
     path('rate/details/<int:pk>/', RateDetailView.as_view(), name='rate-details'),
     path('rate/create/', CreateRate.as_view(), name='rate-create'),

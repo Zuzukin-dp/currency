@@ -24,6 +24,20 @@ def date_start_to_str(date_start):
     return string_date
 
 
+def latest_archive_rates():
+    # rate = Rate.objects.filter(bank='1').order_by('created')
+    # rate.created.time()
+    # for rates in rate:
+    #     if rates.created.time() == datetime.time(0, 0, 0, 1):
+    #         a = []
+    #         a.append(rates)
+
+    # rate = Rate.objects.filter(bank='1', created.time()==datetime.time(0, 0, 0, 1)).last()
+
+    # return latest_data_start
+    pass
+
+
 class Command(BaseCommand):
     help = 'parse exchange archive from PrivatBank'  # noqa
 

@@ -2,11 +2,11 @@ import random
 import string
 from decimal import Decimal
 
-from django.core.cache import cache
 from currency import choices
 from currency import consts
 from currency.models import Rate, Source
 
+from django.core.cache import cache
 # import requests
 # import csv
 # from faker import Faker

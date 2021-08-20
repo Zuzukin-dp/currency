@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+<!--{% load cache %}-->
+
 
 {% block main_content %}
 
-<button onclick="location.href='{% url 'currency:rate-create' %}'">Create Rate</button>
-<br>
+<!--    {% cache 500 latest_rates %}-->
 
 <table class="table table-striped" border="3">
     <thead>
@@ -16,8 +17,6 @@
         <th scope="col">Created</th>
         <th scope="col">Updated</th>
         <th scope="col">Source</th>
-        <th scope="col">Details</th>
-        <th scope="col">Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -31,19 +30,10 @@
         <td scope="row">{{ rate.created }}</td>
         <td scope="row">{{ rate.updated }}</td>
         <td scope="row">{{ rate.bank.name }}</td>
-
-        <td scope="row">
-            <button onclick="location.href='{% url 'currency:rate-details' rate.id %}';">Details</button>
-        </td>
-
-        <td scope="row">
-            <button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button>
-        </td>
-
-
     </tr>
     {% endfor %}
 
     </tbody>
 </table>
+<!--    {% endcache %}-->
 {% endblock main_content %}

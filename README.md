@@ -35,3 +35,7 @@
 '$ sudo service rabbitmq-server status'
 
 '$ celery -A settings worker -l info'
+
+'$ memcached:  sudo service memcached status
+'
+'$ memcached:  sudo service memcached start'

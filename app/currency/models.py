@@ -32,6 +32,7 @@ class Rate(models.Model):
     sale = models.DecimalField(max_digits=5, decimal_places=2)
     buy = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     bank = models.ForeignKey(
         Source,
         on_delete=models.CASCADE,

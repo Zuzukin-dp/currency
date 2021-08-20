@@ -63,6 +63,15 @@ INSTALLED_APPS = [
     'drf_yasg',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -202,6 +211,8 @@ SHELL_PLUS_IMPORTS = [
     'from currency.tasks import parse_oschadbank',
     'from currency.tasks import parse_alfabank',
     'from currency.tasks import parse_raiffeisen',
+    # 'from currency.management.commands.privatbank_exchange_archive import Command',
+    # 'from currency.management.commands.gen_data_contactus import Command',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

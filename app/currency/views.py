@@ -3,14 +3,17 @@
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import Analytics, ContactUs, Rate, Source
 from currency.tasks import task_send_email
-from currency.utils import generate_password as gp, read_txt
+from currency.utils import generate_password as gp, get_latest_rates, read_txt
 
 # from django.core.mail import send_mail
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+
+# from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator
 
 
 def generate_pass(request):
@@ -68,6 +71,17 @@ class RateDeleteView(UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
+
+# @method_decorator(cache_page(60 * 60 * 8), name='dispatch')
+class LatestRates(TemplateView):
+    template_name = 'latest_rates.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['message'] = 'Hello World!'
+        context['object_list'] = get_latest_rates()
+        return context
 
 
 class SourceListView(ListView):
@@ -143,7 +157,6 @@ class ContactUsUpdateView(UpdateView):
 class ContactUsDeleteView(DeleteView):
     queryset = ContactUs.objects.all()
     success_url = reverse_lazy('currency:contactus-list')
-
 
 # class RateListApi(View):
 #     def get(self, request):

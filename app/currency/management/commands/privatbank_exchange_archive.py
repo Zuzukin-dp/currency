@@ -36,10 +36,12 @@ class Command(BaseCommand):
     help = 'parse exchange archive from PrivatBank'  # noqa
 
     def handle(self, *args, **options):
-        date_start = latest_archive_rates()
+        date = datetime.date.today()
+        date_start = date - datetime.timedelta(days=1)
+        # date_start = latest_archive_rates()
         # date_start = datetime.date(2014, 12, 1)
-        # date_stop = datetime.date(2014, 12, 18)
-        date_stop = dt.now().date()
+        date_stop = datetime.date(1992, 3, 19)
+        # date_stop =  dt.now().date()
 
         available_currency_type = {
             'USD': choices.RATE_TYPE_USD,
@@ -56,38 +58,39 @@ class Command(BaseCommand):
             currency_date = response.json()['date']
 
             for curr in currency_list:
-                currency_type = curr['currency']
-                if currency_type in available_currency_type:
-                    currency_type = available_currency_type[curr['currency']]
-                    buy = to_decimal(curr['purchaseRate'])
-                    sale = to_decimal(curr['saleRate'])
-                    bank = Source.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
+                if 'currency' in curr:
+                    currency_type = curr['currency']
+                    if currency_type in available_currency_type:
+                        currency_type = available_currency_type[curr['currency']]
+                        buy = to_decimal(curr['purchaseRate'])
+                        sale = to_decimal(curr['saleRate'])
+                        bank = Source.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
 
-                    previous_rate = Rate.objects.filter(
-                        created=convert_created_db_date(currency_date),
-                        bank=bank,
-                        cur_type=currency_type
-                    ).order_by('created').last()
-
-                    # check if new rate should be create
-                    if (
-                            previous_rate is None or  # rate does not exists, create first one
-                            previous_rate.sale != sale or  # check if sale was changed after last check
-                            previous_rate.buy != buy
-                    ):
-                        # create Rate object
-                        Rate.objects.create(
-                            cur_type=currency_type,
-                            sale=sale,
-                            buy=buy,
+                        previous_rate = Rate.objects.filter(
+                            # created=convert_created_db_date(currency_date),
                             bank=bank,
-                        )
+                            cur_type=currency_type
+                        ).order_by('created').last()
 
-                        # update created field before create Rate object
-                        rate = Rate.objects.last()
-                        Rate.objects.filter(id=rate.id).update(created=convert_created_db_date(currency_date))
+                        # check if new rate should be create
+                        if (
+                                previous_rate is None or  # rate does not exists, create first one
+                                previous_rate.sale != sale or  # check if sale was changed after last check
+                                previous_rate.buy != buy
+                        ):
+                            # create Rate object
+                            Rate.objects.create(
+                                cur_type=currency_type,
+                                sale=sale,
+                                buy=buy,
+                                bank=bank,
+                            )
+
+                            # update created field before create Rate object
+                            rate = Rate.objects.last()
+                            Rate.objects.filter(id=rate.id).update(created=convert_created_db_date(currency_date))
 
             if date_start == date_stop:
                 break
-            date_start += datetime.timedelta(days=1)
+            date_start -= datetime.timedelta(days=1)
             sleep(6)

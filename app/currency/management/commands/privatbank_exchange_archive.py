@@ -57,6 +57,8 @@ class Command(BaseCommand):
             currency_list = response.json()['exchangeRate']
             currency_date = response.json()['date']
 
+            bank = Source.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
+
             for curr in currency_list:
                 if 'currency' in curr:
                     currency_type = curr['currency']
@@ -64,7 +66,6 @@ class Command(BaseCommand):
                         currency_type = available_currency_type[curr['currency']]
                         buy = to_decimal(curr['purchaseRate'])
                         sale = to_decimal(curr['saleRate'])
-                        bank = Source.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
 
                         previous_rate = Rate.objects.filter(
                             # created=convert_created_db_date(currency_date),

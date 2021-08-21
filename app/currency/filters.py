@@ -1,7 +1,9 @@
 import django_filters
 from django.forms import DateInput
+from currency import choices
+from currency import consts
 
-from currency.models import Rate
+from currency.models import Rate, Source
 
 
 class RateFilter(django_filters.FilterSet):
@@ -14,9 +16,22 @@ class RateFilter(django_filters.FilterSet):
         field_name='created', lookup_expr='date__lte',
     )
 
+    currency_type = django_filters.ChoiceFilter(
+        choices=choices.RATE_TYPE_CHOICES,
+        field_name='cur_type',
+        empty_label='All types',
+    )
+
+    source_name = django_filters.ModelChoiceFilter(
+        queryset=Source.objects.all().prefetch_related('rate_set').order_by('created'),
+        field_name='bank',
+        empty_label='All Source',
+    )
+
     class Meta:
         model = Rate
         fields = {
+            # 'cur_type': ('currency_type',),
             'buy': ('exact',),
             'sale': ('exact',),
         }

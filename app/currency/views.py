@@ -1,10 +1,10 @@
 # from annoying.functions import get_object_or_None
 
+from currency.filters import RateFilter
 from currency.forms import ContactUsForm, RateForm, SourceForm
 from currency.models import Analytics, ContactUs, Rate, Source
 from currency.tasks import task_send_email
 from currency.utils import generate_password as gp, get_latest_rates, read_txt
-from currency.filters import RateFilter
 
 # from django.core.mail import send_mail
 from django.contrib.auth.mixins import UserPassesTestMixin

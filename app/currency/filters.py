@@ -1,9 +1,9 @@
-import django_filters
-from django.forms import DateInput
 from currency import choices
-from currency import consts
-
 from currency.models import Rate, Source
+
+from django.forms import DateInput
+
+import django_filters
 
 
 class RateFilter(django_filters.FilterSet):

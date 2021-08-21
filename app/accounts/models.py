@@ -1,8 +1,8 @@
+# from accounts.validators import validate_is_digits
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.templatetags.static import static
-
-from accounts.validators import validate_is_digits
 
 
 def user_directory_path(instance, filename):

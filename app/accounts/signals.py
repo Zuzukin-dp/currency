@@ -4,11 +4,12 @@ from django.dispatch import receiver
 from accounts.models import User
 
 
-# @receiver(pre_save, sender=User)
-# def pre_save_user(sender, instance, **kwargs):
-#     instance.phone = ''.join(char for char in instance.phone if char.isdigit())
-#     # print('PRE SAVE SIGNALS')
-#     pass
+@receiver(pre_save, sender=User)
+def pre_save_user(sender, instance, **kwargs):
+    instance.email = instance.email.lower()
+
+    # instance.phone = ''.join(char for char in instance.phone if char.isdigit())
+    # print('PRE SAVE SIGNALS')
 
 
 # @receiver(post_save, sender=User)
@@ -21,10 +22,10 @@ from accounts.models import User
 #     pass
 
 
-class DeleteIsNotAllowed(Exception):
-    pass
-
-
-@receiver(pre_delete, sender=User)
-def stop_delete(*args, **kwargs):
-    raise DeleteIsNotAllowed('Instance could not be deleted')
+# class DeleteIsNotAllowed(Exception):
+#     pass
+#
+#
+# @receiver(pre_delete, sender=User)
+# def stop_delete(*args, **kwargs):
+#     raise DeleteIsNotAllowed('Instance could not be deleted')

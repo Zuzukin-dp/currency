@@ -31,10 +31,10 @@ class User(AbstractUser):
         return static('img/default-avatar.png')
 
     def save(self, *args, **kwargs):
-        print('Before Save')
+        # print('Before Save')
         if self.pk:  # if object was created
             pass
         if self.phone:
             self.phone = ''.join(char for char in self.phone if char.isdigit())
         super().save(*args, **kwargs)
-        print('After Save')
+        # print('After Save')

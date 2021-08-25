@@ -6,7 +6,8 @@ from django.dispatch import receiver
 
 @receiver(pre_save, sender=User)
 def pre_save_user(sender, instance, **kwargs):
-    instance.email = instance.email.lower()
+    if instance.email:
+        instance.email = instance.email.lower()
 
     # instance.phone = ''.join(char for char in instance.phone if char.isdigit())
     # print('PRE SAVE SIGNALS')

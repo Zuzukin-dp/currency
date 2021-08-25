@@ -11,6 +11,9 @@ gunicorn:
 gunicorn01:
 	cd app/ && gunicorn -w 4 settings.wsgi:application -b 127.0.0.1:8001 --log-level=DEBUG
 
+uwsgi:
+	cd app/ && uwsgi --http :8000 --module settings.wsgi --master --processes 4
+
 makemigrations:
 	$(manage_py) makemigrations
 

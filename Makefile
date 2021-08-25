@@ -5,6 +5,12 @@ manage_py := python ./app/manage.py
 runserver:
 	$(manage_py) runserver 127.0.0.1:8000
 
+gunicorn:
+	cd app/ && gunicorn -w 4 settings.wsgi:application -b 127.0.0.1:8000 --log-level=DEBUG
+
+gunicorn01:
+	cd app/ && gunicorn -w 4 settings.wsgi:application -b 127.0.0.1:8001 --log-level=DEBUG
+
 makemigrations:
 	$(manage_py) makemigrations
 
@@ -40,3 +46,6 @@ pytest_cov:
 
 show-coverage:  ## open coverage HTML report in default browser
 	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"
+
+collectstatic:
+	$(manage_py) collectstatic --noinput

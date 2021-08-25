@@ -1,10 +1,40 @@
 {% extends 'base.html' %}
 
+{% load pagination %}
+
+{% load crispy_forms_filters %}
+
 {% block main_content %}
 
-<button onclick="location.href='{% url 'currency:rate-create' %}'">Create Rate</button>
-<br>
+<!--<br>-->
 
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button onclick="location.href='{% url 'currency:rate-create' %}'">Create Rate</button>
+            <!--      1 of 3-->
+        </div>
+        <div class="col">
+            <form method="get">
+                {{ filter.form|crispy}}
+                <button type="submit">
+                    <span class="glyphicon glyphicon-search"></span> Apply Filters
+                </button>
+<!--                <button type="reset" class="btn btn-primary">-->
+<!--                    <span class="glyphicon glyphicon-search"></span> Reset Filters-->
+<!--                </button>-->
+            </form>
+            <!--      2 of 3-->
+        </div>
+        <div class="col">
+            <!--      3 of 3-->
+        </div>
+        <div class="col">
+            <!--      4 of 3-->
+        </div>
+    </div>
+</div>
 <table class="table table-striped" border="3">
     <thead>
     <tr align="center">
@@ -39,11 +69,13 @@
         <td scope="row">
             <button onclick="location.href='{% url 'currency:rate-update' rate.id %}';">Edit</button>
         </td>
-
-
     </tr>
     {% endfor %}
 
     </tbody>
 </table>
+
+{% if is_paginated %}
+{% pagination page_obj %}
+{% endif %}
 {% endblock main_content %}

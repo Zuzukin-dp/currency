@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f$5kxyg%-v=#r^61oc!-o86t*sg5^y^@34a@+jpv$6co@n2ps8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -153,9 +153,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / '..' / 'static_content' / 'static'  # /home/bav/python/currency/static_content/static
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / '..' / 'static_content'
+MEDIA_ROOT = BASE_DIR / '..' / 'static_content' / 'media'
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

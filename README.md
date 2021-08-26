@@ -36,6 +36,12 @@
 
 '$ celery -A settings worker -l info'
 
-'$ memcached:  sudo service memcached status
-'
+'$ memcached:  sudo service memcached status'
+
 '$ memcached:  sudo service memcached start'
+
+'$ nginx: sudo apt install nginx'
+
+'$ nginx: sudo service nginx status'
+
+'$ nginx: sudo service nginx start'

@@ -137,3 +137,4 @@ app/db.sqlite3
 /app/settings/settings_local.py
 /app/currency/migrations_old/
 /nginx.conf
+/tmp/

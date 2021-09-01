@@ -1,9 +1,9 @@
-from time import sleep, time
-
-
-def foo(num):
-    sleep(2)
-    print(num)
+# from time import sleep, time
+#
+#
+# def foo(num):
+#     sleep(2)
+#     print(num)
 
 ############################
 
@@ -99,20 +99,20 @@ def foo(num):
 #############################
 
 
-import time
-from threading import Thread
-
-COUNT = 50000000
-
-def countdown(n):
-    while n > 0:
-        n -= 1
-
-start = time.time()
-countdown(COUNT)
-end = time.time()
-
-print('Done in:', end - start)
+# import time
+# from threading import Thread
+#
+# COUNT = 50000000
+#
+# def countdown(n):
+#     while n > 0:
+#         n -= 1
+#
+# start = time.time()
+# countdown(COUNT)
+# end = time.time()
+#
+# print('Done in:', end - start)
 #
 #
 # t1 = Thread(target=countdown, args=(COUNT//2,))

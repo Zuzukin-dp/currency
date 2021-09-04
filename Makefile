@@ -2,6 +2,9 @@ SHELL := /bin/bash
 
 manage_py := python ./app/manage.py
 
+build:
+	docker-compose down && docker-compose up -d
+
 runserver:
 	$(manage_py) runserver 127.0.0.1:8000
 

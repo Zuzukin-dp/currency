@@ -33,6 +33,8 @@ def to_decimal(number: str) -> Decimal:
     :inputs number as string:
     :returns a number as a string, rounded to two decimal places:
     """
+    if ',' in str(number):
+        number = number.replace(',', '.')
     return Decimal(number).quantize(Decimal('0.01'))
 
 

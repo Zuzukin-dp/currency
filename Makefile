@@ -2,11 +2,14 @@ SHELL := /bin/bash
 
 manage_py := python ./app/manage.py
 
+build:
+	docker-compose down && docker-compose up -d
+
 runserver:
 	$(manage_py) runserver 127.0.0.1:8000
 
 gunicorn:
-	cd app/ && gunicorn -w 4 settings.wsgi:application -b 127.0.0.1:8000 --log-level=DEBUG
+	cd app/ && gunicorn -w 4 settings.wsgi:application -b 0.0.0.0:8000 --log-level=DEBUG
 
 gunicorn01:
 	cd app/ && gunicorn -w 4 settings.wsgi:application -b 127.0.0.1:8001 --log-level=DEBUG

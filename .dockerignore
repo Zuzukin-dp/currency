@@ -1,0 +1,15 @@
+.pytest_cache
+.idea
+__pycache__
+venv
+
+app/db.sqlite3
+
+/tmp.py
+/work_commads.txt
+/app/currency/views_old.py
+/app/settings/settings_local.py
+/app/currency/migrations_old/
+/nginx.conf
+/tmp/
+/docker-compose_1.yml

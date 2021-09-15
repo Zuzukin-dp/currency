@@ -1,12 +1,24 @@
 SHELL := /bin/bash
 
-manage_py := python ./app/manage.py
+#manage_py := python ./app/manage.py
+manage_py := docker exec -it backend python ./app/manage.py
+
+#build:
+#	docker-compose down && docker-compose up -d
 
 build:
-	docker-compose down && docker-compose up -d
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+
+down:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 
 runserver:
-	$(manage_py) runserver 127.0.0.1:8000
+	$(manage_py) runserver 0:8001
+
+collectstatic:
+	$(manage_py) collectstatic --noinput && \
+	docker cp backend:/tmp/static /tmp/static && \
+	docker cp /tmp/static nginx:/etc/nginx/static
 
 gunicorn:
 	cd app/ && gunicorn -w 4 settings.wsgi:application -b 0.0.0.0:8000 --log-level=DEBUG
@@ -53,5 +65,5 @@ pytest_cov:
 show-coverage:  ## open coverage HTML report in default browser
 	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"
 
-collectstatic:
-	$(manage_py) collectstatic --noinput
+#collectstatic:
+	#$(manage_py) collectstatic --noinput

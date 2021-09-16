@@ -139,3 +139,4 @@ app/db.sqlite3
 /nginx.conf
 /tmp/
 /docker-compose_1.yml
+/portainer/

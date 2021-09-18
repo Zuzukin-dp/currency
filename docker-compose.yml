@@ -37,17 +37,18 @@ services:
   rabbitmq:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
+    ports:
+      - "5672:5672"
     env_file:
       - .env
 
   flower:
     image: mher/flower
     container_name: flower
-    command: celery --broker=amqp://guest:guest@localhost:5672// flower
+#    command: celery --broker=amqp://guest:guest@rabbitmq:5672// flower
+    command: celery --broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_DEFAULT_HOST}:${RABBITMQ_DEFAULT_PORT}// flower
     depends_on:
       - rabbitmq
-      - celerybeat
-      - celery
 
   nginx:
     image: nginx:1.19

@@ -169,7 +169,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / '..' / 'static_content' / 'static'  # /home/bav/python/currency/static_content/static
+# STATIC_ROOT = BASE_DIR / '..' / 'static_content' / 'static'  # /home/bav/python/currency/static_content/static
+STATIC_ROOT = '/tmp/static'  # /home/bav/python/currency/static_content/static
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / '..' / 'static_content' / 'media'
@@ -190,6 +191,12 @@ INTERNAL_IPS = [
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'true'
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 
 # CELERY_BROKER_URL = 'amqp://localhost'
@@ -320,6 +327,20 @@ SWAGGER_SETTINGS = {
 # STATICFILES_DIRS = [
 #     BASE_DIR / 'currency' / 'static'
 # ]
+
+if DEBUG:
+    import socket
+
+    # debug tool_bar
+    DEBUG_TOOLBAR_PATCH_SETTINGS = True
+    INTERNAL_IPS = ['127.0.0.1']
+
+    # tricks to have debug toolbar when developing with docker
+    ip = socket.gethostbyname(socket.gethostname())
+    ip = '.'.join(ip.split('.')[:-1])
+    ip = f'{ip}.1'
+    INTERNAL_IPS.append(ip)
+
 
 try:
     from settings.settings_local import *  # noqa
